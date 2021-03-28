@@ -1,3 +1,4 @@
+using Game.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,13 @@ namespace Game.Enemy
         Transform player;
         Animator anim;
         State currentState;
+        Health health;
 
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
             anim = GetComponent<Animator>();
+            health = GetComponent<Health>();
             player = GameObject.FindWithTag("Player").transform;
 
             currentState = new Idle(gameObject, agent, anim, player);
@@ -23,20 +26,37 @@ namespace Game.Enemy
 
         void Update()
         {
+            if (health.isDead)
+            {
+                currentState = new Dead(gameObject, agent, anim, player);
+                GetComponentInChildren<Hurtbox>().DisableHitbox();
+                GetComponentInChildren<Hurtbox>().DisableHurtbox();
+            }
+
             currentState = currentState.Process();
         }
 
-        public void AnimationStart()
+        void AnimationStart()
         {
 
         }
 
-        public void AnimationDelayedStart()
+        void AnimationDelayedStart()
         {
 
         }
 
-        public void AnimationEnd()
+        void AnimationAttackHit()
+        {
+            GetComponentInParent<Transform>().GetComponentInChildren<Hurtbox>().EnableHitbox();
+        }
+
+        void AnimationAttackHitEnd()
+        {
+            GetComponentInParent<Transform>().GetComponentInChildren<Hurtbox>().DisableHitbox();
+        }
+
+        void AnimationEnd()
         {
             currentState.Exit();
         }

@@ -59,6 +59,11 @@ namespace Game.Control
 
         void Update()
         {
+            CheckControllerAttack();
+        }
+
+        void CheckControllerAttack()
+        {
             if (PlayerInputHandler.inputMethod == PlayerInputHandler.InputMethods.Gamepad)
             {
                 if (Mathf.Abs(inputControllerVector.x) < minDeltaController && Mathf.Abs(inputControllerVector.y) < minDeltaController)
@@ -72,7 +77,6 @@ namespace Game.Control
                     }
                 }
             }
-
         }
 
         void AskForAttack()

@@ -8,7 +8,7 @@ namespace Game.Enemy
 {
     public class State
     {
-        public enum STATE { Idle, Chase, Attack, MoveBack };
+        public enum STATE { Idle, Chase, Attack, Hit, MoveBack, Dead };
         protected enum Event { Enter, Update, Exit };
 
         protected STATE name;
@@ -131,10 +131,6 @@ namespace Game.Enemy
                     stage = Event.Exit;
                 }
             }
-            else
-            {
-                Debug.LogWarning("Agent has no path!");
-            }
         }
 
         public override void Exit()
@@ -190,18 +186,43 @@ namespace Game.Enemy
 
         public override void Exit()
         {
-            if (!CanAttackPlayer())
-            {
-                nextState = new Chase(npc, agent, anim, player);
-            }
-            else if (!CanSeePlayer())
-            {
-                nextState = new Idle(npc, agent, anim, player);
-            }
-            else
-            {
+            if (CanAttackPlayer())
                 nextState = new Attack(npc, agent, anim, player);
-            }
+            else if (CanSeePlayer())
+                nextState = new Chase(npc, agent, anim, player);
+            else
+                nextState = new Idle(npc, agent, anim, player);
+
+            base.Exit();
+        }
+    }
+
+    public class Hit : State
+    {
+        public Hit(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
+        {
+            name = STATE.Hit;
+        }
+
+        public override void Enter()
+        {                
+            base.Enter();
+        }
+
+        public override void Update()
+        {
+
+        }
+
+        public override void Exit()
+        {
+            if (CanAttackPlayer())
+                nextState = new Attack(npc, agent, anim, player);
+            else if (CanSeePlayer())
+                nextState = new Chase(npc, agent, anim, player);
+            else
+                nextState = new Idle(npc, agent, anim, player);
+
             base.Exit();
         }
     }
@@ -211,6 +232,29 @@ namespace Game.Enemy
         public MoveBack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
             name = STATE.MoveBack;
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+        }
+
+        public override void Update()
+        {
+
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+        }
+    }
+
+    public class Dead : State
+    {
+        public Dead(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
+        {
+            name = STATE.Dead;
         }
 
         public override void Enter()

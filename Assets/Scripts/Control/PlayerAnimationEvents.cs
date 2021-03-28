@@ -7,22 +7,33 @@ namespace Game.Control
 {
     public class PlayerAnimationEvents : MonoBehaviour
     {
-        public void AnimationStart()
+        void AnimationStart()
         {
             GetComponent<PlayerInputHandler>().takeAttacks = false;
         }
 
-        public void AnimationDelayedStart()
+        void AnimationDelayedStart()
         {
             GetComponent<PlayerInputHandler>().takeMovement = false;
             GetComponent<PlayerInputHandler>().takeRotation = false;
         }
 
-        public void AnimationEnd()
+        void AnimationAttackHit()
+        {
+            GetComponentInParent<Transform>().GetComponentInChildren<Hurtbox>().EnableHitbox();
+        }
+
+        void AnimationAttackHitEnd()
+        {
+            GetComponentInParent<Transform>().GetComponentInChildren<Hurtbox>().DisableHitbox();
+        }
+
+        void AnimationEnd()
         {
             GetComponent<PlayerInputHandler>().takeAttacks = true;
             GetComponent<PlayerInputHandler>().takeMovement = true;
             GetComponent<PlayerInputHandler>().takeRotation = true;
+
             GetComponent<PlayerInputAttacks>().PerformQueuedAttack();
         }
     }

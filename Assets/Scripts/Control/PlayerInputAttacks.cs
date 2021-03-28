@@ -1,17 +1,12 @@
-using Game.Control;
-using System;
-using System.Collections;
+using Game.Combat;
 using UnityEngine;
 
-namespace Game.Combat
+namespace Game.Control
 {
-    public class PlayerAttacks : MonoBehaviour
+    public class PlayerInputAttacks : MonoBehaviour
     {
         public float minDeltaMouse;
         public float minDeltaController;
-
-        public AudioClip[] clips;
-        AudioSource audio;
 
         float minDelta;
         Inputs inputs;
@@ -23,22 +18,13 @@ namespace Game.Combat
         bool ControllerRSReset;
 
         CharacterController characterController;
-
         PlayerInputHandler PlayerInputHandler;
-        Animator anim;
-
-        public enum Attacks { Null, Right, Left, Up, Down };
-        Attacks queuedAttack;
-
-        ObjectHealth playerHealth;
+        Attacks.Direction queuedAttack;
 
         void Awake()
         {
             characterController = GetComponent<CharacterController>();
             PlayerInputHandler = GetComponent<PlayerInputHandler>();
-            anim = GetComponent<Animator>();
-            audio = GetComponent<AudioSource>();
-            playerHealth = GetComponent<ObjectHealth>();
 
             inputs = new Inputs();
             inputs.Player.MouseVector.performed += ctx => inputVector = ctx.ReadValue<Vector2>();
@@ -66,7 +52,7 @@ namespace Game.Combat
 
         void Start()
         {
-            queuedAttack = Attacks.Null;
+            queuedAttack = Attacks.Direction.Null;
             ControllerRTHold = false;
             ControllerRSReset = true;
         }
@@ -92,63 +78,33 @@ namespace Game.Combat
         void AskForAttack()
         {
             if (PlayerInputHandler.takeAttacks)
-                PerformAttack(CalculateDirection());
+                GetComponent<TriggerAttacks>().Trigger(CalculateDirection());
             else
                 queuedAttack = CalculateDirection();
         }
 
-        Attacks CalculateDirection()
+        Attacks.Direction CalculateDirection()
         {
-            Attacks attack = Attacks.Left;
+            Attacks.Direction attack = Attacks.Direction.Left;
 
             if (inputVectorDelta.x > minDelta && Mathf.Abs(inputVectorDelta.x) > Mathf.Abs(inputVectorDelta.y))
-                attack = Attacks.Right;
+                attack = Attacks.Direction.Right;
             else if (inputVectorDelta.x < -minDelta && Mathf.Abs(inputVectorDelta.x) > Mathf.Abs(inputVectorDelta.y))
-                attack = Attacks.Left;
+                attack = Attacks.Direction.Left;
             else if (inputVectorDelta.y > minDelta)
-                attack = Attacks.Up;
+                attack = Attacks.Direction.Up;
             else if (inputVectorDelta.y < -minDelta)
-                attack = Attacks.Down;
+                attack = Attacks.Direction.Down;
 
             return attack;
         }
 
-        void PerformAttack(Attacks dir)
-        {
-            switch (dir)
-            {
-                case Attacks.Null:
-                    break;
-                case Attacks.Right:
-                    anim.SetTrigger("AttackRight");
-                    audio.clip = clips[0];
-                    audio.Play();
-                    break;
-                case Attacks.Left:
-                    anim.SetTrigger("AttackLeft");
-                    audio.clip = clips[1];
-                    audio.Play();
-                    break;
-                case Attacks.Up:
-                    anim.SetTrigger("AttackUp");
-                    audio.clip = clips[2];
-                    audio.Play();
-                    playerHealth.Value -= 20;
-                    break;
-                case Attacks.Down:
-                    anim.SetTrigger("AttackDown");
-                    audio.clip = clips[3];
-                    audio.Play();
-                    break;
-            }
-        }
-
         public void PerformQueuedAttack()
         {
-            if (queuedAttack != Attacks.Null)
+            if (queuedAttack != Attacks.Direction.Null)
             {
-                PerformAttack(queuedAttack);
-                queuedAttack = Attacks.Null;
+                GetComponent<TriggerAttacks>().Trigger(queuedAttack);
+                queuedAttack = Attacks.Direction.Null;
             }
         }
 

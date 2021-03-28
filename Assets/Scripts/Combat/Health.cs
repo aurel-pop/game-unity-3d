@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Game.Combat
 {
-    public class ObjectHealth : MonoBehaviour
+    public class Health : MonoBehaviour
     {
         [SerializeField] int maxHealth;
         [SerializeField] ProgressBarPro healthBar;
-        Animator anim;
         int health;
+        public bool isDead;
 
         public int Value
         {
@@ -26,19 +26,16 @@ namespace Game.Combat
             }
         }
 
-        void Awake()
-        {
-            anim = GetComponent<Animator>();
-        }
-
         void Start()
         {
             health = maxHealth;
+            isDead = false;
         }
 
         void Die()
         {
-            anim.SetTrigger("Die");
+            GetComponent<Animator>().SetTrigger("Die");
+            isDead = true;
         }
     }
 }

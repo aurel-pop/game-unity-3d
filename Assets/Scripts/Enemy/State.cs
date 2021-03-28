@@ -1,17 +1,18 @@
+using Game.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Game.Combat
+namespace Game.Enemy
 {
     public class State
     {
         public enum STATE { Idle, Chase, Attack, MoveBack };
-        public enum Event { Enter, Update, Exit };
+        protected enum Event { Enter, Update, Exit };
 
-        public STATE name;
-        public Event stage;
+        protected STATE name;
+        protected Event stage;
         protected GameObject npc;
         protected Animator anim;
         protected Transform player;
@@ -145,48 +146,37 @@ namespace Game.Combat
 
     public class Attack : State
     {
-        AudioSource audio;
-        AudioClip[] clips;
-
         public Attack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
             name = STATE.Attack;
-            audio = _npc.GetComponent<AudioSource>();
-            clips = _npc.GetComponent<AI>().clips;
         }
 
         public override void Enter()
         {
             agent.isStopped = true;
-            PlayerAttacks.Attacks attack = PlayerAttacks.Attacks.Null;
+            Attacks.Direction attack = Attacks.Direction.Null;
+
             int rng = Random.Range(0, 100);
 
             if (rng < 25)
             {
-                attack = PlayerAttacks.Attacks.Right;
-                audio.clip = clips[0];
-                audio.Play();
+                attack = Attacks.Direction.Right;
             }
             else if (rng >= 25 && rng < 50)
             {
-                attack = PlayerAttacks.Attacks.Left;
-                audio.clip = clips[1];
-                audio.Play();
+                attack = Attacks.Direction.Left;
             }
             else if (rng >= 50 && rng < 75)
             {
-                attack = PlayerAttacks.Attacks.Up;
-                audio.clip = clips[2];
-                audio.Play();
+                attack = Attacks.Direction.Up;
             }
             else
             {
-                attack = PlayerAttacks.Attacks.Down;
-                audio.clip = clips[3];
-                audio.Play();
+                attack = Attacks.Direction.Down;
             }
 
-            anim.SetTrigger("Attack" + attack);
+            npc.GetComponent<TriggerAttacks>().Trigger(attack);
+
             base.Enter();
         }
 

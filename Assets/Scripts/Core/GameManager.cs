@@ -7,12 +7,12 @@ namespace Game.Core
 {
     public class GameManager : MonoBehaviour
     {
-        ObjectHealth playerHealth;
+        Health playerHealth;
         public bool isGameOver;
 
         void Awake()
         {
-            playerHealth = GameObject.FindWithTag("Player").GetComponent<ObjectHealth>();
+            playerHealth = GameObject.FindWithTag("Player").GetComponent<Health>();
         }
 
         void Start()

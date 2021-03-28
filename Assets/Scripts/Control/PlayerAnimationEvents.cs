@@ -7,32 +7,23 @@ namespace Game.Control
 {
     public class PlayerAnimationEvents : MonoBehaviour
     {
-        PlayerInputHandler PlayerInputHandler;
-        PlayerAttacks PlayerAttacks;
-
-        void Start()
-        {
-            PlayerInputHandler = GetComponent<PlayerInputHandler>();
-            PlayerAttacks = GetComponent<PlayerAttacks>();
-        }
-
         public void AnimationStart()
         {
-            PlayerInputHandler.takeAttacks = false;
+            GetComponent<PlayerInputHandler>().takeAttacks = false;
         }
 
         public void AnimationDelayedStart()
         {
-            PlayerInputHandler.takeMovement = false;
-            PlayerInputHandler.takeRotation = false;
+            GetComponent<PlayerInputHandler>().takeMovement = false;
+            GetComponent<PlayerInputHandler>().takeRotation = false;
         }
 
         public void AnimationEnd()
         {
-            PlayerInputHandler.takeAttacks = true;
-            PlayerInputHandler.takeMovement = true;
-            PlayerInputHandler.takeRotation = true;
-            PlayerAttacks.PerformQueuedAttack();
+            GetComponent<PlayerInputHandler>().takeAttacks = true;
+            GetComponent<PlayerInputHandler>().takeMovement = true;
+            GetComponent<PlayerInputHandler>().takeRotation = true;
+            GetComponent<PlayerInputAttacks>().PerformQueuedAttack();
         }
     }
 }

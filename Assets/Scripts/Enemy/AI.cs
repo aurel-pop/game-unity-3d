@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Game.Combat
+namespace Game.Enemy
 {
     public class AI : MonoBehaviour
     {
@@ -11,14 +11,14 @@ namespace Game.Combat
         Transform player;
         Animator anim;
         State currentState;
-        public AudioClip[] clips;
 
         void Start()
         {
-            agent = this.GetComponent<NavMeshAgent>();
-            anim = this.GetComponent<Animator>();
+            agent = GetComponent<NavMeshAgent>();
+            anim = GetComponent<Animator>();
             player = GameObject.FindWithTag("Player").transform;
-            currentState = new Idle(this.gameObject, agent, anim, player);
+
+            currentState = new Idle(gameObject, agent, anim, player);
         }
 
         void Update()
@@ -38,7 +38,7 @@ namespace Game.Combat
 
         public void AnimationEnd()
         {
-            currentState.stage = State.Event.Exit;
+            currentState.Exit();
         }
     }
 }

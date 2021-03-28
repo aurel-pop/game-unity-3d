@@ -6,9 +6,10 @@ namespace Game.Control
 {
     public class PlayerInputHandler : MonoBehaviour
     {
+        [HideInInspector] public bool takeAttacks;
         [HideInInspector] public bool takeMovement;
         [HideInInspector] public bool takeRotation;
-        [HideInInspector] public bool takeAttacks;
+        [HideInInspector] public bool takeDamage;
 
         Inputs inputs;
         public enum InputMethods { Mouse, Gamepad };
@@ -27,9 +28,10 @@ namespace Game.Control
 
         void Start()
         {
+            takeAttacks = true;
             takeMovement = true;
             takeRotation = true;
-            takeAttacks = true;
+            takeDamage = true;
         }
     }
 }

@@ -32,7 +32,6 @@ namespace Game.Core
         public void GameOver()
         {
             isGameOver = true;
-            Debug.Log("GAME OVER!");
         }
     }
 }

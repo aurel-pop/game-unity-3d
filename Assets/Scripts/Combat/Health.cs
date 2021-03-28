@@ -1,3 +1,4 @@
+using Game.Control;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,11 @@ namespace Game.Combat
         {
             GetComponent<Animator>().SetTrigger("Die");
             isDead = true;
+
+            GetComponent<PlayerInputHandler>().takeAttacks = false;
+            GetComponent<PlayerInputHandler>().takeMovement = false;
+            GetComponent<PlayerInputHandler>().takeRotation = false;
+            GetComponent<PlayerInputHandler>().takeDamage = false;
         }
     }
 }

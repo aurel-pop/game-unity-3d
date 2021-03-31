@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b4450b124f6b16b42a51eb4ef6a876eb
+guid: a0e0b7ffd65735a43a38ebb4e12be278
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -359,7 +359,7 @@ ModelImporter:
     second: weapon01
   - first:
       74: 7400000
-    second: ShieldRun
+    second: Idle_FightReady
   - first:
       95: 9500000
     second: //RootNode
@@ -395,11 +395,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ShieldRun
+      name: Idle_FightReady
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 26
+      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

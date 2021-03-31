@@ -9,12 +9,6 @@ namespace Game.Combat
         [SerializeField] Transform target;
         [SerializeField] Vector3 offset;
 
-        void Start()
-        {
-
-        }
-
-
         void Update()
         {
             transform.position = target.position + offset;

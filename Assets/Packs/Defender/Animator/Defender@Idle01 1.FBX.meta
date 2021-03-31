@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: be3f7889e43429f429f447e17ba9a3fd
+guid: f2cad15f942d77c4dae2f8ff9833eb26
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -121,7 +121,7 @@ ModelImporter:
     4300006: weapon02
     4300008: shield01
     4300010: weapon01
-    7400000: Stun
+    7400000: Idle01
     9500000: //RootNode
     13700000: defender01
   externalObjects: {}
@@ -153,10 +153,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Stun
+      name: Idle01
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 52
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

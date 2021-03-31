@@ -82,7 +82,7 @@ namespace Game.Control
         void AskForAttack()
         {
             if (PlayerInputHandler.takeAttacks)
-                GetComponent<TriggerAttacks>().Trigger(CalculateDirection());
+                GetComponentInChildren<TriggerAttacks>().Trigger(CalculateDirection());
             else
                 queuedAttack = CalculateDirection();
         }
@@ -107,7 +107,7 @@ namespace Game.Control
         {
             if (queuedAttack != Attacks.Direction.Null)
             {
-                GetComponent<TriggerAttacks>().Trigger(queuedAttack);
+                GetComponentInChildren<TriggerAttacks>().Trigger(queuedAttack);
                 queuedAttack = Attacks.Direction.Null;
             }
         }

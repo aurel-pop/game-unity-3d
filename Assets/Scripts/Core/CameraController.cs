@@ -4,16 +4,17 @@ namespace Game.Core
 {
     public class CameraController : MonoBehaviour
     {
-        Transform player;
+        [SerializeField] Transform target;
 
-        private void Awake()
+        void Start()
         {
-            player = GameObject.FindWithTag("Player").transform;
+
         }
+
 
         void Update()
         {
-            transform.position = player.position;
+            transform.position = target.position;
         }
     }
 }

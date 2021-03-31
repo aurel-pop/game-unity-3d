@@ -11,7 +11,7 @@ namespace Game.Combat
         void OnTriggerEnter(Collider other)
         {
             GetComponentInParent<Animator>().SetTrigger("Hit");
-            GetComponentInParent<Health>().Value -= 40;
+            GetComponentInParent<Health>().Value -= 45;
         }
 
         void Start()

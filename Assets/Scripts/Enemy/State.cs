@@ -8,11 +8,11 @@ namespace Game.Enemy
 {
     public class State
     {
-        public enum STATE { Idle, Chase, Attack, Hit, MoveBack, Dead, Won }
-        public enum Event { Enter, Update, Exit }
-        protected STATE state;
-        protected Event phase;
+        public enum STATE { Idle, Chase, Attack, Hit, MoveBack, Dead };
+        protected enum Event { Enter, Update, Exit };
 
+        protected STATE name;
+        protected Event stage;
         protected GameObject npc;
         protected Animator anim;
         protected Transform player;
@@ -29,19 +29,19 @@ namespace Game.Enemy
             npc = _npc;
             agent = _agent;
             anim = _anim;
-            phase = Event.Enter;
+            stage = Event.Enter;
             player = _player;
         }
 
-        public virtual void Enter() { phase = Event.Update; }
-        public virtual void Update() { phase = Event.Update; }
-        public virtual void Exit() { phase = Event.Exit; }
+        public virtual void Enter() { stage = Event.Update; }
+        public virtual void Update() { stage = Event.Update; }
+        public virtual void Exit() { stage = Event.Exit; }
 
         public State Process()
         {
-            if (phase == Event.Enter) Enter();
-            if (phase == Event.Update) Update();
-            if (phase == Event.Exit)
+            if (stage == Event.Enter) Enter();
+            if (stage == Event.Update) Update();
+            if (stage == Event.Exit)
             {
                 Exit();
                 return nextState;
@@ -77,7 +77,7 @@ namespace Game.Enemy
     {
         public Idle(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Idle;
+            name = STATE.Idle;
         }
 
         public override void Enter()
@@ -90,7 +90,7 @@ namespace Game.Enemy
             if (CanSeePlayer())
             {
                 nextState = new Chase(npc, agent, anim, player);
-                phase = Event.Exit;
+                stage = Event.Exit;
             }
         }
 
@@ -104,12 +104,13 @@ namespace Game.Enemy
     {
         public Chase(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Chase;
+            name = STATE.Chase;
             agent.isStopped = false;
         }
 
         public override void Enter()
         {
+            anim.SetBool("isRunning", true);
             base.Enter();
         }
 
@@ -119,23 +120,22 @@ namespace Game.Enemy
 
             if (agent.hasPath)
             {
-                anim.SetFloat("forwardSpeed", Mathf.Lerp(anim.GetFloat("forwardSpeed"), npc.GetComponent<NavMeshAgent>().velocity.magnitude, Time.deltaTime * 10f));
-
                 if (CanAttackPlayer())
                 {
                     nextState = new Attack(npc, agent, anim, player);
-                    phase = Event.Exit;
+                    stage = Event.Exit;
                 }
                 else if (!CanSeePlayer())
                 {
                     nextState = new Idle(npc, agent, anim, player);
-                    phase = Event.Exit;
+                    stage = Event.Exit;
                 }
             }
         }
 
         public override void Exit()
         {
+            anim.SetBool("isRunning", false);
             base.Exit();
         }
     }
@@ -144,7 +144,7 @@ namespace Game.Enemy
     {
         public Attack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Attack;
+            name = STATE.Attack;
         }
 
         public override void Enter()
@@ -186,11 +186,7 @@ namespace Game.Enemy
 
         public override void Exit()
         {
-            if (npc.GetComponent<Health>().isDead)
-                nextState = new Dead(npc, agent, anim, player);
-            else if (player.GetComponentInChildren<Health>().isDead)
-                nextState = new Won(npc, agent, anim, player);
-            else if (CanAttackPlayer())
+            if (CanAttackPlayer())
                 nextState = new Attack(npc, agent, anim, player);
             else if (CanSeePlayer())
                 nextState = new Chase(npc, agent, anim, player);
@@ -205,7 +201,7 @@ namespace Game.Enemy
     {
         public Hit(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Hit;
+            name = STATE.Hit;
         }
 
         public override void Enter()
@@ -220,11 +216,7 @@ namespace Game.Enemy
 
         public override void Exit()
         {
-            if (npc.GetComponent<Health>().isDead)
-                nextState = new Dead(npc, agent, anim, player);
-            else if (player.GetComponentInChildren<Health>().isDead)
-                nextState = new Won(npc, agent, anim, player);
-            else if (CanAttackPlayer())
+            if (CanAttackPlayer())
                 nextState = new Attack(npc, agent, anim, player);
             else if (CanSeePlayer())
                 nextState = new Chase(npc, agent, anim, player);
@@ -239,7 +231,7 @@ namespace Game.Enemy
     {
         public MoveBack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.MoveBack;
+            name = STATE.MoveBack;
         }
 
         public override void Enter()
@@ -262,30 +254,7 @@ namespace Game.Enemy
     {
         public Dead(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Dead;
-        }
-
-        public override void Enter()
-        {
-            base.Enter();
-        }
-
-        public override void Update()
-        {
-
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-        }
-    }
-
-    public class Won : State
-    {
-        public Won(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
-        {
-            state = STATE.Won;
+            name = STATE.Dead;
         }
 
         public override void Enter()

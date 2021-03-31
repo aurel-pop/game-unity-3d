@@ -25,8 +25,8 @@ namespace Game.Movement
 
         void Start()
         {
-            characterController = GetComponentInParent<CharacterController>();
-            anim = GetComponentInParent<Animator>();
+            characterController = GetComponent<CharacterController>();
+            anim = GetComponent<Animator>();
             gravity = -9.81f;
         }
 

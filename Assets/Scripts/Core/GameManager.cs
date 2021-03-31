@@ -12,7 +12,7 @@ namespace Game.Core
 
         void Awake()
         {
-            playerHealth = GameObject.FindWithTag("Player").GetComponentInChildren<Health>();
+            playerHealth = GameObject.FindWithTag("Player").GetComponent<Health>();
         }
 
         void Start()

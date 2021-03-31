@@ -18,8 +18,8 @@ namespace Game.Enemy
         {
             agent = GetComponent<NavMeshAgent>();
             anim = GetComponent<Animator>();
-            player = GameObject.FindWithTag("Player").transform;
             health = GetComponent<Health>();
+            player = GameObject.FindWithTag("Player").transform;
 
             currentState = new Idle(gameObject, agent, anim, player);
         }
@@ -48,12 +48,12 @@ namespace Game.Enemy
 
         void AnimationAttackHit()
         {
-            GetComponentInChildren<Hurtbox>().EnableHitbox();
+            GetComponentInParent<Transform>().GetComponentInChildren<Hurtbox>().EnableHitbox();
         }
 
         void AnimationAttackHitEnd()
         {
-            GetComponentInChildren<Hurtbox>().DisableHitbox();
+            GetComponentInParent<Transform>().GetComponentInChildren<Hurtbox>().DisableHitbox();
         }
 
         void AnimationEnd()

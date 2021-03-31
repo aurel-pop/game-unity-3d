@@ -7,43 +7,34 @@ namespace Game.Control
 {
     public class PlayerAnimationEvents : MonoBehaviour
     {
-        PlayerInputHandler playerInputHandler;
-
-        void Awake()
-        {
-            playerInputHandler = GetComponentInParent<PlayerInputHandler>();
-        }
-
         void AnimationStart()
         {
-            playerInputHandler.takeAttacks = false;
+            GetComponent<PlayerInputHandler>().takeAttacks = false;
         }
 
         void AnimationDelayedStart()
         {
-            playerInputHandler.takeMovement = false;
-            playerInputHandler.takeRotation = false;
+            GetComponent<PlayerInputHandler>().takeMovement = false;
+            GetComponent<PlayerInputHandler>().takeRotation = false;
         }
 
         void AnimationAttackHit()
         {
-            GetComponentInChildren<Hurtbox>().EnableHitbox();
+            GetComponentInParent<Transform>().GetComponentInChildren<Hurtbox>().EnableHitbox();
         }
 
         void AnimationAttackHitEnd()
         {
-            GetComponentInChildren<Hurtbox>().DisableHitbox();
+            GetComponentInParent<Transform>().GetComponentInChildren<Hurtbox>().DisableHitbox();
         }
 
         void AnimationEnd()
         {
-            if(!GetComponentInParent<Health>().isDead)
-            {
-                playerInputHandler.takeAttacks = true;
-                playerInputHandler.takeMovement = true;
-                playerInputHandler.takeRotation = true;
-                GetComponentInParent<PlayerInputAttacks>().PerformQueuedAttack();
-            }
+            GetComponent<PlayerInputHandler>().takeAttacks = true;
+            GetComponent<PlayerInputHandler>().takeMovement = true;
+            GetComponent<PlayerInputHandler>().takeRotation = true;
+
+            GetComponent<PlayerInputAttacks>().PerformQueuedAttack();
         }
     }
 }

@@ -6,35 +6,50 @@ namespace Game.Movement
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [Range(0.0f, 20.0f)] public float moveSpeed;
+        public float moveSpeed;
+        public float groundDistance;
         public Transform groundChecker;
         public LayerMask ground;
-        public float groundDistance;
-
-        CharacterController characterController;
-        Animator anim;
+        PlayerInputHandler PlayerInputHandler;
         Inputs inputs;
         Vector2 inputMoveVector;
         Vector3 velocity;
+        CharacterController characterController;
+        Animator anim;
 
         void Awake()
         {
             inputs = new Inputs();
+        }
+
+        void Start()
+        {
             characterController = GetComponent<CharacterController>();
-            anim = GetComponentInChildren<Animator>();
+            PlayerInputHandler = GetComponent<PlayerInputHandler>();
+            anim = GetComponent<Animator>();
         }
 
         void Update()
         {
+            // Read Inputs (normalized)
             inputMoveVector = inputs.Player.Move.ReadValue<Vector2>();
 
-            if (GetComponent<PlayerInputHandler>().takeMovement)
+            // Move
+            if (PlayerInputHandler.takeMovement)
             {
                 velocity = (inputMoveVector.y * transform.forward) + (inputMoveVector.x * transform.right);
                 characterController.Move(velocity * (moveSpeed * Time.deltaTime));
             }
 
-            anim.SetFloat("forwardSpeed", Mathf.Lerp(anim.GetFloat("forwardSpeed"), characterController.velocity.magnitude, Time.deltaTime * 10f));
+            if (characterController.velocity.magnitude > 0)
+            {
+                anim.SetBool("isRunning", true);
+            }
+            else
+            {
+                anim.SetBool("isRunning", false);
+                anim.SetBool("isDashing", false);
+            }
         }
 
         #region Enable / Disable

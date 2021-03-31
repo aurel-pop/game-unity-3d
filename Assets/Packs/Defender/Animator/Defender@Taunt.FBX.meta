@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b77b2336108f0e040b8ad875489abf75
+guid: 03df57f790e633f4d800b537d4886b0d
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -359,7 +359,7 @@ ModelImporter:
     second: weapon01
   - first:
       74: 7400000
-    second: Attack02
+    second: Taunt
   - first:
       95: 9500000
     second: //RootNode
@@ -395,11 +395,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack02
+      name: Taunt
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 110
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -418,28 +418,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: AnimationStart
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.21119593
-        functionName: AnimationDelayedStart
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.8320611
-        functionName: AnimationEnd
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -485,20 +464,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - 7a546b753b2fe034bbe3adc4945d6c17
-  - a7ec0d4f65d3a3c458db7cb6f883cddf
-  - 9d0d3cae6f33d0a439f8aa59b35f5b32
-  - f3605ce501464794398536a651b345dc
-  - ea0aeea926249954ead3c038b9cc5cc5
-  - 160c7b3619d48f24997da72f7b738860
-  - d4cbae109fc76ec41a6964870b44809d
-  - b4450b124f6b16b42a51eb4ef6a876eb
-  - f124d41ed47fc54488d51d13761cac6a
-  - 4444eecd1ba0aa74fa588f345881094a
-  - ec34556f2e34df6449c565951efb9b3a
-  - be3f7889e43429f429f447e17ba9a3fd
-  - 03df57f790e633f4d800b537d4886b0d
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3

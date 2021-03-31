@@ -9,8 +9,6 @@ namespace Game.Combat
     {
         [SerializeField] int maxHealth;
         [SerializeField] ProgressBarPro healthBar;
-
-        PlayerInputHandler playerInputHandler;
         int health;
         public bool isDead;
 
@@ -29,11 +27,6 @@ namespace Game.Combat
             }
         }
 
-        void Awake()
-        {
-            playerInputHandler = GetComponentInParent<PlayerInputHandler>();
-        }
-
         void Start()
         {
             health = maxHealth;
@@ -42,17 +35,16 @@ namespace Game.Combat
 
         void Die()
         {
+            GetComponent<Animator>().SetTrigger("Die");
             isDead = true;
 
-            if (tag == "Player")
+            if(gameObject.tag == "Player")
             {
-                playerInputHandler.takeAttacks = false;
-                playerInputHandler.takeMovement = false;
-                playerInputHandler.takeRotation = false;
-                playerInputHandler.takeDamage = false;
+                GetComponent<PlayerInputHandler>().takeAttacks = false;
+                GetComponent<PlayerInputHandler>().takeMovement = false;
+                GetComponent<PlayerInputHandler>().takeRotation = false;
+                GetComponent<PlayerInputHandler>().takeDamage = false;
             }
-
-            GetComponentInChildren<Animator>().SetTrigger("Die");
         }
     }
 }

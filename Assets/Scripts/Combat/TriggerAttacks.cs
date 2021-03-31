@@ -7,14 +7,11 @@ namespace Game.Combat
     public class TriggerAttacks : MonoBehaviour
     {
         [SerializeField] AudioClip[] clips;
-
-        AudioSource source;
-        Animator anim;
+        Health Health;
 
         void Awake()
         {
-            source = GetComponentInParent<AudioSource>();
-            anim = GetComponentInChildren<Animator>();
+            Health = GetComponent<Health>();
         }
 
         public void Trigger(Attacks.Direction dir)
@@ -24,20 +21,20 @@ namespace Game.Combat
                 case Attacks.Direction.Null:
                     break;
                 case Attacks.Direction.Right:
-                    anim.SetTrigger("AttackRight");
-                    source.PlayOneShot(clips[0]);
+                    GetComponent<Animator>().SetTrigger("AttackRight");
+                    GetComponent<AudioSource>().PlayOneShot(clips[0]);
                     break;
                 case Attacks.Direction.Left:
-                    anim.SetTrigger("AttackLeft");
-                    source.PlayOneShot(clips[1]);
+                    GetComponent<Animator>().SetTrigger("AttackLeft");
+                    GetComponent<AudioSource>().PlayOneShot(clips[1]);
                     break;
                 case Attacks.Direction.Up:
-                    anim.SetTrigger("AttackUp");
-                    source.PlayOneShot(clips[2]);
+                    GetComponent<Animator>().SetTrigger("AttackUp");
+                    GetComponent<AudioSource>().PlayOneShot(clips[2]);
                     break;
                 case Attacks.Direction.Down:
-                    anim.SetTrigger("AttackDown");
-                    source.PlayOneShot(clips[3]);
+                    GetComponent<Animator>().SetTrigger("AttackDown");
+                    GetComponent<AudioSource>().PlayOneShot(clips[3]);
                     break;
             }
         }

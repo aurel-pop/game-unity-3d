@@ -9,7 +9,6 @@ namespace Game.Control
         public bool takeAttacks;
         public bool takeMovement;
         public bool takeRotation;
-        public bool takeDamage;
 
         Inputs inputs;
         public enum InputMethods { Mouse, Gamepad };
@@ -31,7 +30,6 @@ namespace Game.Control
             takeAttacks = true;
             takeMovement = true;
             takeRotation = true;
-            takeDamage = true;
         }
     }
 }

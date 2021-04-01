@@ -487,6 +487,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 514284660, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 401082009298383885, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
       propertyPath: healthBar
       value: 
@@ -495,8 +499,24 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1443763468}
+    - target: {fileID: 903032658523500340, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733004440804362345, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6246578101091760246, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6246607875457989050, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248703618244442332, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6249773838246134996, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
@@ -543,6 +563,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7256465157005439652, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: m_SlopeLimit
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697863625247840860, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: attackClips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697863625247840860, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: attackClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4cf8db3611d1f4541afb0b6a09ed49a6, type: 3}
+    - target: {fileID: 7697863625247840860, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: attackClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 46e74089731748c4b98916c9c71ffd19, type: 3}
+    - target: {fileID: 7697863625247840860, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: attackClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5fa56951b522d404598ca21b45cd3de6, type: 3}
+    - target: {fileID: 7697863625247840860, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
+      propertyPath: attackClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3661a089adebec34f8661a0c4685b2d5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 382f5d4c35037fe4e97c551a3f16aac3, type: 3}
 --- !u!1001 &853488627
@@ -1034,6 +1078,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2135242250, guid: 50663a1a7bdb6244eb3d1451e7866db2, type: 3}
+      propertyPath: attackClips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2135242250, guid: 50663a1a7bdb6244eb3d1451e7866db2, type: 3}
+      propertyPath: attackClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4cf8db3611d1f4541afb0b6a09ed49a6, type: 3}
+    - target: {fileID: 2135242250, guid: 50663a1a7bdb6244eb3d1451e7866db2, type: 3}
+      propertyPath: attackClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 46e74089731748c4b98916c9c71ffd19, type: 3}
+    - target: {fileID: 2135242250, guid: 50663a1a7bdb6244eb3d1451e7866db2, type: 3}
+      propertyPath: attackClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5fa56951b522d404598ca21b45cd3de6, type: 3}
+    - target: {fileID: 2135242250, guid: 50663a1a7bdb6244eb3d1451e7866db2, type: 3}
+      propertyPath: attackClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3661a089adebec34f8661a0c4685b2d5, type: 3}
     - target: {fileID: 741979383595120668, guid: 50663a1a7bdb6244eb3d1451e7866db2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 11.191248

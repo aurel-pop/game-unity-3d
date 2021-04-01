@@ -1,3 +1,4 @@
+using System;
 using Game.Combat;
 using UnityEngine;
 
@@ -14,17 +15,18 @@ namespace Game.Control
         Vector2 inputVectorStarted;
         Vector2 inputVectorDelta;
         Vector2 inputControllerVector;
-        bool ControllerRTHold;
-        bool ControllerRSReset;
+        bool controllerRTHold;
+        bool controllerRSReset;
 
         CharacterController characterController;
-        PlayerInputHandler PlayerInputHandler;
+        PlayerInputHandler playerInputHandler;
         Attacks.Direction queuedAttack;
+        bool isShielding;
 
         void Awake()
         {
             characterController = GetComponent<CharacterController>();
-            PlayerInputHandler = GetComponent<PlayerInputHandler>();
+            playerInputHandler = GetComponent<PlayerInputHandler>();
 
             inputs = new Inputs();
             inputs.Player.MouseVector.performed += ctx => inputVector = ctx.ReadValue<Vector2>();
@@ -35,6 +37,12 @@ namespace Game.Control
                 minDelta = minDeltaMouse;
                 AskForAttack();
             };
+            inputs.Player.RMBStart.performed += ctx =>
+            {
+                isShielding = true;
+                AskForAttack();
+            };
+            inputs.Player.RMBEnd.performed += ctx => CancelShielding();
 
             inputs.Player.ControllerVector.performed += ctx =>
             {
@@ -42,19 +50,25 @@ namespace Game.Control
                 inputVectorDelta = inputControllerVector;
                 minDelta = minDeltaController;
             };
-            inputs.Player.ControllerRTStart.performed += ctx => ControllerRTHold = true;
+            inputs.Player.ControllerRTStart.performed += ctx => controllerRTHold = true;
             inputs.Player.ControllerRTEnd.performed += ctx =>
             {
-                ControllerRTHold = false;
-                ControllerRSReset = true;
+                controllerRTHold = false;
+                controllerRSReset = true;
             };
+            inputs.Player.ControllerLTStart.performed += ctx =>
+            {
+                isShielding = true;
+                AskForAttack();
+            };
+            inputs.Player.ControllerLTEnd.performed += ctx => CancelShielding();
         }
 
         void Start()
         {
-            queuedAttack = Attacks.Direction.Null;
-            ControllerRTHold = false;
-            ControllerRSReset = true;
+            queuedAttack = Attacks.Direction.None;
+            controllerRTHold = false;
+            controllerRSReset = true;
         }
 
         void Update()
@@ -64,16 +78,16 @@ namespace Game.Control
 
         void CheckControllerAttack()
         {
-            if (PlayerInputHandler.inputMethod == PlayerInputHandler.InputMethods.Gamepad)
+            if (playerInputHandler.inputMethod == PlayerInputHandler.InputMethods.Gamepad)
             {
                 if (Mathf.Abs(inputControllerVector.x) < minDeltaController && Mathf.Abs(inputControllerVector.y) < minDeltaController)
-                    ControllerRSReset = true;
+                    controllerRSReset = true;
                 else
                 {
-                    if (ControllerRTHold && ControllerRSReset)
+                    if (controllerRTHold && controllerRSReset)
                     {
                         AskForAttack();
-                        ControllerRSReset = false;
+                        controllerRSReset = false;
                     }
                 }
             }
@@ -81,8 +95,8 @@ namespace Game.Control
 
         void AskForAttack()
         {
-            if (PlayerInputHandler.takeAttacks)
-                GetComponentInChildren<TriggerAttacks>().Trigger(CalculateDirection());
+            if (playerInputHandler.takeAttacks)
+                GetComponentInChildren<TriggerAttacks>().TriggerAttack(CalculateDirection());
             else
                 queuedAttack = CalculateDirection();
         }
@@ -100,15 +114,24 @@ namespace Game.Control
             else if (inputVectorDelta.y < -minDelta)
                 attack = Attacks.Direction.Down;
 
+            if (isShielding)
+                attack = Attacks.Direction.Shield;
+
             return attack;
+        }
+
+        void CancelShielding()
+        {
+            isShielding = false;
+            GetComponentInChildren<TriggerAttacks>().StopShielding();
         }
 
         public void PerformQueuedAttack()
         {
-            if (queuedAttack != Attacks.Direction.Null)
+            if (queuedAttack != Attacks.Direction.None)
             {
-                GetComponentInChildren<TriggerAttacks>().Trigger(queuedAttack);
-                queuedAttack = Attacks.Direction.Null;
+                GetComponentInChildren<TriggerAttacks>().TriggerAttack(queuedAttack);
+                queuedAttack = Attacks.Direction.None;
             }
         }
 

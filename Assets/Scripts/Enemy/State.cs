@@ -150,7 +150,7 @@ namespace Game.Enemy
         public override void Enter()
         {
             agent.isStopped = true;
-            Attacks.Direction attack = Attacks.Direction.Null;
+            Attacks.Direction attack = Attacks.Direction.None;
 
             int rng = Random.Range(0, 100);
 
@@ -171,7 +171,7 @@ namespace Game.Enemy
                 attack = Attacks.Direction.Down;
             }
 
-            npc.GetComponent<TriggerAttacks>().Trigger(attack);
+            npc.GetComponent<TriggerAttacks>().TriggerAttack(attack);
 
             base.Enter();
         }

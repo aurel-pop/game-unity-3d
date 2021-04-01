@@ -119,7 +119,7 @@ namespace Game.Enemy
 
             if (agent.hasPath)
             {
-                anim.SetFloat("forwardSpeed", Mathf.Lerp(anim.GetFloat("forwardSpeed"), npc.GetComponent<NavMeshAgent>().velocity.magnitude, Time.deltaTime * 10f));
+                anim.SetFloat("forwardSpeed", Mathf.Lerp(anim.GetFloat("forwardSpeed"), agent.velocity.magnitude, Time.deltaTime * 10f));
 
                 if (CanAttackPlayer())
                 {

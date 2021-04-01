@@ -34,6 +34,7 @@ namespace Game.Enemy
             }
 
             currentState = currentState.Process();
+            Debug.Log(currentState);
         }
 
         void AnimationStart()

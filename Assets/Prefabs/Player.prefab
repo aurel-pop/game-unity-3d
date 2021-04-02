@@ -73,9 +73,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.75
-  m_Height: 2
+  m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &1434849730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debe5680e3342f34683bb219ac344638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 4
+  rotateSpeed: 10
 --- !u!1 &3733004440804362345
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  animationSpeed: 15
   groundDistance: 0.2
   groundChecker: {fileID: 514284661}
   ground:

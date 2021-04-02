@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 514284661}
   m_Layer: 6
   m_Name: GroundChecker
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,10 +161,10 @@ GameObject:
   - component: {fileID: 7450101303045379899}
   - component: {fileID: 138320183578770664}
   - component: {fileID: 7224983995492777738}
-  - component: {fileID: 721606783359815709}
+  - component: {fileID: 7300088856828472412}
   m_Layer: 6
-  m_Name: Body
-  m_TagString: Untagged
+  m_Name: Animator
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10c9c3e333d0c3489aa0391a9c549b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &721606783359815709
+--- !u!114 &7300088856828472412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,7 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debe5680e3342f34683bb219ac344638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   rotateSpeed: 4
 --- !u!1 &3733004440804362345
 GameObject:
@@ -245,7 +244,7 @@ GameObject:
   - component: {fileID: 401082009298383885}
   m_Layer: 6
   m_Name: Combat
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,11 +276,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3647e5af2e199547baca332da21f21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clips:
+  attackClips:
   - {fileID: 8300000, guid: 4cf8db3611d1f4541afb0b6a09ed49a6, type: 3}
   - {fileID: 8300000, guid: 46e74089731748c4b98916c9c71ffd19, type: 3}
   - {fileID: 8300000, guid: 5fa56951b522d404598ca21b45cd3de6, type: 3}
   - {fileID: 8300000, guid: 3661a089adebec34f8661a0c4685b2d5, type: 3}
+  isShielded: 0
 --- !u!114 &401082009298383885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,7 +478,6 @@ MonoBehaviour:
   takeAttacks: 0
   takeMovement: 0
   takeRotation: 0
-  takeDamage: 0
   inputMethod: 0
 --- !u!114 &6988496643187555192
 MonoBehaviour:
@@ -507,7 +506,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.8
-  m_SlopeLimit: 90
+  m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
@@ -525,11 +524,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  groundDistance: 0.2
   groundChecker: {fileID: 514284661}
   ground:
     serializedVersion: 2
     m_Bits: 8
-  groundDistance: 0.2
 --- !u!114 &2458585296193371001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,7 +630,7 @@ GameObject:
   - component: {fileID: 6292449720251693144}
   m_Layer: 6
   m_Name: defender01
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1970,7 +1969,7 @@ GameObject:
   - component: {fileID: 6249549062860836320}
   m_Layer: 6
   m_Name: Bip001
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

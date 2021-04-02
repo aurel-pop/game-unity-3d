@@ -33,7 +33,8 @@ namespace Game.Movement
         void Update()
         {
             // Read Inputs
-            inputMoveVector = inputs.Player.Move.ReadValue<Vector2>();
+            inputs.Player.MouseMove.performed += ctx => inputMoveVector = ctx.ReadValue<Vector2>();
+            inputs.Player.ControllerMove.performed += ctx => inputMoveVector = ctx.ReadValue<Vector2>();
             movement = (inputMoveVector.y * transform.forward) + (inputMoveVector.x * transform.right);
 
             // Apply gravity

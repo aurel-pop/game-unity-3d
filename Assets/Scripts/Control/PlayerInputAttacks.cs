@@ -16,7 +16,7 @@ namespace Game.Control
         Vector2 inputVectorDelta;
         Vector2 inputControllerVector;
         bool controllerRTHold;
-        bool controllerRSReset;
+        bool controllerAttackReset;
 
         CharacterController characterController;
         PlayerInputHandler playerInputHandler;
@@ -27,8 +27,9 @@ namespace Game.Control
         {
             characterController = GetComponent<CharacterController>();
             playerInputHandler = GetComponent<PlayerInputHandler>();
-
             inputs = new Inputs();
+
+            //Mouse
             inputs.Player.MouseVector.performed += ctx => inputVector = ctx.ReadValue<Vector2>();
             inputs.Player.LMBStart.performed += ctx => inputVectorStarted = inputVector;
             inputs.Player.LMBEnd.performed += ctx =>
@@ -44,17 +45,22 @@ namespace Game.Control
             };
             inputs.Player.RMBEnd.performed += ctx => CancelShielding();
 
+            //Controller
             inputs.Player.ControllerVector.performed += ctx =>
             {
                 inputControllerVector = ctx.ReadValue<Vector2>();
                 inputVectorDelta = inputControllerVector;
                 minDelta = minDeltaController;
             };
-            inputs.Player.ControllerRTStart.performed += ctx => controllerRTHold = true;
+            inputs.Player.ControllerRTStart.performed += ctx =>
+            {
+                controllerRTHold = true;
+                AskForAttack();
+            };
             inputs.Player.ControllerRTEnd.performed += ctx =>
             {
                 controllerRTHold = false;
-                controllerRSReset = true;
+                controllerAttackReset = true;
             };
             inputs.Player.ControllerLTStart.performed += ctx =>
             {
@@ -68,27 +74,27 @@ namespace Game.Control
         {
             queuedAttack = Attacks.Direction.None;
             controllerRTHold = false;
-            controllerRSReset = true;
+            controllerAttackReset = true;
         }
 
         void Update()
         {
-            CheckControllerAttack();
+            if (playerInputHandler.inputMethod == PlayerInputHandler.InputMethods.Gamepad)
+            {
+                CheckControllerAttack();
+            }
         }
 
         void CheckControllerAttack()
         {
-            if (playerInputHandler.inputMethod == PlayerInputHandler.InputMethods.Gamepad)
+            if (Mathf.Abs(inputControllerVector.x) < minDeltaController && Mathf.Abs(inputControllerVector.y) < minDeltaController)
+                controllerAttackReset = true;
+            else
             {
-                if (Mathf.Abs(inputControllerVector.x) < minDeltaController && Mathf.Abs(inputControllerVector.y) < minDeltaController)
-                    controllerRSReset = true;
-                else
+                if (controllerRTHold && controllerAttackReset)
                 {
-                    if (controllerRTHold && controllerRSReset)
-                    {
-                        AskForAttack();
-                        controllerRSReset = false;
-                    }
+                    AskForAttack();
+                    controllerAttackReset = false;
                 }
             }
         }

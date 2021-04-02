@@ -7,34 +7,48 @@ namespace Game.Movement
     public class PlayerMovement : MonoBehaviour
     {
         [Range(0.0f, 20.0f)] public float moveSpeed;
+        [Range(0.0f, 20.0f)] public float animationSpeed;
+        [Range(0.0f, 3.0f)] public float groundDistance;
         public Transform groundChecker;
         public LayerMask ground;
-        public float groundDistance;
 
+        PlayerInputHandler playerInputHandler;
         CharacterController characterController;
         Animator anim;
         Inputs inputs;
         Vector2 inputMoveVector;
-        Vector3 velocity;
 
         void Awake()
         {
-            inputs = new Inputs();
             characterController = GetComponent<CharacterController>();
             anim = GetComponentInChildren<Animator>();
+            playerInputHandler = GetComponent<PlayerInputHandler>();
+            inputs = new Inputs();
+            inputs.Player.MouseMove.performed += ctx => inputMoveVector = ctx.ReadValue<Vector2>();
+            inputs.Player.ControllerMove.performed += ctx => inputMoveVector = ctx.ReadValue<Vector2>();
         }
 
         void Update()
         {
-            inputMoveVector = inputs.Player.Move.ReadValue<Vector2>();
-
-            if (GetComponent<PlayerInputHandler>().takeMovement)
+            if (playerInputHandler.takeMovement)
             {
-                velocity = (inputMoveVector.y * transform.forward) + (inputMoveVector.x * transform.right);
-                characterController.Move(velocity * (moveSpeed * Time.deltaTime));
+                MoveCharacter();
             }
 
-            anim.SetFloat("forwardSpeed", Mathf.Lerp(anim.GetFloat("forwardSpeed"), characterController.velocity.magnitude, Time.deltaTime * 10f));
+            UpdateAnimator();
+        }
+
+        void MoveCharacter()
+        {
+            Vector3 velocity = (inputMoveVector.y * transform.forward) + (inputMoveVector.x * transform.right);
+            characterController.Move(velocity * (moveSpeed * Time.deltaTime));
+        }
+
+        void UpdateAnimator()
+        {
+            Vector3 velocity = characterController.velocity;
+            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+            anim.SetFloat("forwardSpeed", Mathf.Lerp(anim.GetFloat("forwardSpeed"), localVelocity.magnitude, animationSpeed * Time.deltaTime));
         }
 
         #region Enable / Disable

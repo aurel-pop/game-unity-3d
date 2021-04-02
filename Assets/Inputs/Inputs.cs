@@ -19,9 +19,17 @@ public class @Inputs : IInputActionCollection, IDisposable
             ""id"": ""f959dcbd-d6a0-472c-9ba3-c4411d19bf98"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""MouseMove"",
                     ""type"": ""PassThrough"",
                     ""id"": ""70b94ed4-f822-4669-9252-d6766e54b5d5"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ControllerMove"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""b677b776-dc6b-4d39-a226-7aa022665066"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -139,7 +147,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""MouseMove"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -150,7 +158,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""MouseMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -161,7 +169,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""MouseMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -172,7 +180,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""MouseMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -183,20 +191,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
+                    ""action"": ""MouseMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""978bfe49-cc26-4a3d-ab7b-7d7a29327403"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -349,6 +346,17 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""MouseVectorDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78fca520-aa11-4aa8-8def-56023605a0cb"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ControllerMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -926,7 +934,8 @@ public class @Inputs : IInputActionCollection, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_MouseMove = m_Player.FindAction("MouseMove", throwIfNotFound: true);
+        m_Player_ControllerMove = m_Player.FindAction("ControllerMove", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_LMBStart = m_Player.FindAction("LMBStart", throwIfNotFound: true);
         m_Player_LMBHold = m_Player.FindAction("LMBHold", throwIfNotFound: true);
@@ -1001,7 +1010,8 @@ public class @Inputs : IInputActionCollection, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
-    private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_MouseMove;
+    private readonly InputAction m_Player_ControllerMove;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_LMBStart;
     private readonly InputAction m_Player_LMBHold;
@@ -1019,7 +1029,8 @@ public class @Inputs : IInputActionCollection, IDisposable
     {
         private @Inputs m_Wrapper;
         public PlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @MouseMove => m_Wrapper.m_Player_MouseMove;
+        public InputAction @ControllerMove => m_Wrapper.m_Player_ControllerMove;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @LMBStart => m_Wrapper.m_Player_LMBStart;
         public InputAction @LMBHold => m_Wrapper.m_Player_LMBHold;
@@ -1042,9 +1053,12 @@ public class @Inputs : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @MouseMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseMove;
+                @MouseMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseMove;
+                @MouseMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseMove;
+                @ControllerMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerMove;
+                @ControllerMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerMove;
+                @ControllerMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerMove;
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
@@ -1088,9 +1102,12 @@ public class @Inputs : IInputActionCollection, IDisposable
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                @MouseMove.started += instance.OnMouseMove;
+                @MouseMove.performed += instance.OnMouseMove;
+                @MouseMove.canceled += instance.OnMouseMove;
+                @ControllerMove.started += instance.OnControllerMove;
+                @ControllerMove.performed += instance.OnControllerMove;
+                @ControllerMove.canceled += instance.OnControllerMove;
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
@@ -1286,7 +1303,8 @@ public class @Inputs : IInputActionCollection, IDisposable
     }
     public interface IPlayerActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnMouseMove(InputAction.CallbackContext context);
+        void OnControllerMove(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnLMBStart(InputAction.CallbackContext context);
         void OnLMBHold(InputAction.CallbackContext context);

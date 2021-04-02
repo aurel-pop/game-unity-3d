@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Game.Movement
@@ -8,10 +7,11 @@ namespace Game.Movement
     {
         public float jumpHeight;
         bool isGrounded;
+        Inputs inputs;
 
-        void Start()
+        void Awake()
         {
-
+            inputs = new Inputs();
         }
 
         void Update()
@@ -23,5 +23,17 @@ namespace Game.Movement
             //if (Input.GetButtonDown("Jump") && isGrounded)
             //    velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+
+        #region Enable / Disable
+        void OnEnable()
+        {
+            inputs.Enable();
+        }
+
+        void OnDisable()
+        {
+            inputs.Disable();
+        }
+        #endregion
     }
 }

@@ -119,7 +119,7 @@ namespace Game.Enemy
 
             if (agent.hasPath)
             {
-                anim.SetFloat("forwardSpeed", Mathf.Lerp(anim.GetFloat("forwardSpeed"), agent.velocity.magnitude, Time.deltaTime * 10f));
+                UpdateAnimator();
 
                 if (CanAttackPlayer())
                 {
@@ -132,6 +132,14 @@ namespace Game.Enemy
                     phase = Event.Exit;
                 }
             }
+        }
+
+        void UpdateAnimator()
+        {
+            Vector3 velocity = agent.velocity;
+            Vector3 localVelocity = npc.transform.InverseTransformDirection(velocity);
+            float speed = localVelocity.z;
+            anim.SetFloat("forwardSpeed", speed * 10 / 8);
         }
 
         public override void Exit()

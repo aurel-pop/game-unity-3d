@@ -19,11 +19,7 @@ namespace Game.Combat
                 GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[0]);
             } else
             {
-                int rng = Random.Range(0, 100);
-                if (rng < 50 )
-                    GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[1]);
-                else
-                    GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[2]);
+                GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[1]);
             }
         }
 

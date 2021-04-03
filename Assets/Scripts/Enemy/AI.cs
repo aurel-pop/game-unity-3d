@@ -28,13 +28,17 @@ namespace Game.Enemy
         {
             if (health.isDead)
             {
-                currentState = new Dead(gameObject, agent, anim, player);
-                GetComponentInChildren<Hurtbox>().DisableHitbox();
-                GetComponentInChildren<Hurtbox>().DisableHurtbox();
+                Died();
             }
 
             currentState = currentState.Process();
-            Debug.Log(currentState);
+        }
+
+        void Died()
+        {
+            currentState = new Dead(gameObject, agent, anim, player);
+            GetComponentInChildren<Hurtbox>().DisableHitbox();
+            GetComponentInChildren<Hurtbox>().DisableHurtbox();
         }
 
         void AnimationStart()

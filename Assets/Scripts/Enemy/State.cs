@@ -34,7 +34,10 @@ namespace Game.Enemy
         }
 
         public virtual void Enter() { phase = Event.Update; }
-        public virtual void Update() { phase = Event.Update; }
+        public virtual void Update()
+        {
+            UpdateAnimator();
+        }
         public virtual void Exit() { phase = Event.Exit; }
 
         public State Process()
@@ -47,6 +50,12 @@ namespace Game.Enemy
                 return nextState;
             }
             return this;
+        }
+
+        void UpdateAnimator()
+        {
+            Vector3 localVelocity = npc.transform.InverseTransformDirection(agent.velocity);
+            anim.SetFloat("forwardSpeed", localVelocity.z * 10 / agent.speed);
         }
 
         public bool CanSeePlayer()
@@ -92,6 +101,8 @@ namespace Game.Enemy
                 nextState = new Chase(npc, agent, anim, player);
                 phase = Event.Exit;
             }
+
+            base.Update();
         }
 
         public override void Exit()
@@ -119,8 +130,6 @@ namespace Game.Enemy
 
             if (agent.hasPath)
             {
-                UpdateAnimator();
-
                 if (CanAttackPlayer())
                 {
                     nextState = new Attack(npc, agent, anim, player);
@@ -132,14 +141,8 @@ namespace Game.Enemy
                     phase = Event.Exit;
                 }
             }
-        }
 
-        void UpdateAnimator()
-        {
-            Vector3 velocity = agent.velocity;
-            Vector3 localVelocity = npc.transform.InverseTransformDirection(velocity);
-            float speed = localVelocity.z;
-            anim.SetFloat("forwardSpeed", speed * 10 / 8);
+            base.Update();
         }
 
         public override void Exit()
@@ -190,6 +193,8 @@ namespace Game.Enemy
             float angle = Vector3.Angle(direction, npc.transform.forward);
             direction.y = 0;
             npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotationSpeed);
+
+            base.Update();
         }
 
         public override void Exit()
@@ -223,15 +228,13 @@ namespace Game.Enemy
 
         public override void Update()
         {
-
+            base.Update();
         }
 
         public override void Exit()
         {
             if (npc.GetComponent<Health>().isDead)
                 nextState = new Dead(npc, agent, anim, player);
-            else if (player.GetComponentInChildren<Health>().isDead)
-                nextState = new Won(npc, agent, anim, player);
             else if (CanAttackPlayer())
                 nextState = new Attack(npc, agent, anim, player);
             else if (CanSeePlayer())
@@ -257,7 +260,7 @@ namespace Game.Enemy
 
         public override void Update()
         {
-
+            base.Update();
         }
 
         public override void Exit()
@@ -280,7 +283,7 @@ namespace Game.Enemy
 
         public override void Update()
         {
-
+            base.Update();
         }
 
         public override void Exit()
@@ -303,7 +306,7 @@ namespace Game.Enemy
 
         public override void Update()
         {
-
+            base.Update();
         }
 
         public override void Exit()

@@ -19,15 +19,12 @@ namespace Game.Combat
             get => health;
             set
             {
-                if (!GetComponentInParent<TriggerAttacks>().isShielded)
-                {
-                    health = Mathf.Clamp(value, 0, maxHealth);
-                    healthBar.SetValue(health, maxHealth);
+                health = Mathf.Clamp(value, 0, maxHealth);
+                healthBar.SetValue(health, maxHealth);
 
-                    if (health < 1)
-                    {
-                        Die();
-                    }
+                if (health < 1)
+                {
+                    Die();
                 }
             }
         }
@@ -46,14 +43,6 @@ namespace Game.Combat
         void Die()
         {
             isDead = true;
-
-            if (tag == "Player")
-            {
-                playerInputHandler.takeAttacks = false;
-                playerInputHandler.takeMovement = false;
-                playerInputHandler.takeRotation = false;
-            }
-
             GetComponentInChildren<Animator>().SetTrigger("Die");
         }
     }

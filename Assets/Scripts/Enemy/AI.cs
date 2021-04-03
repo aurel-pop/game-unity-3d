@@ -47,7 +47,12 @@ namespace Game.Enemy
 
         }
 
-        void AnimationAttackHit()
+        void AnimationEnd()
+        {
+            currentState.Exit();
+        }
+
+        void AnimationAttackHitStart()
         {
             GetComponentInChildren<Hurtbox>().EnableHitbox();
         }
@@ -57,9 +62,14 @@ namespace Game.Enemy
             GetComponentInChildren<Hurtbox>().DisableHitbox();
         }
 
-        void AnimationEnd()
+        void AnimationIsHitStart()
         {
-            currentState.Exit();
+            currentState = new Hit(gameObject, agent, anim, player);
+        }
+
+        void AnimationIsHitEnd()
+        {
+            
         }
     }
 }

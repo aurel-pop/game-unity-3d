@@ -76662,13 +76662,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.6
-    functionName: AnimationAttackHit
+    functionName: AnimationAttackHitStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.8333333
+  - time: 0.7
     functionName: AnimationAttackHitEnd
     data: 
     objectReferenceParameter: {fileID: 0}

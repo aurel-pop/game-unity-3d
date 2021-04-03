@@ -25,7 +25,23 @@ namespace Game.Control
             playerInputHandler.takeRotation = false;
         }
 
-        void AnimationAttackHit()
+        void AnimationEnd()
+        {
+            if(!GetComponentInParent<Health>().isDead)
+            {
+                playerInputHandler.takeAttacks = true;
+                playerInputHandler.takeMovement = true;
+                playerInputHandler.takeRotation = true;
+                GetComponentInParent<PlayerInputAttacks>().PerformQueuedAttack();
+            } else
+            {
+                playerInputHandler.takeAttacks = false;
+                playerInputHandler.takeMovement = false;
+                playerInputHandler.takeRotation = false;
+            }
+        }
+
+        void AnimationAttackHitStart()
         {
             GetComponentInChildren<Hurtbox>().EnableHitbox();
         }
@@ -35,14 +51,16 @@ namespace Game.Control
             GetComponentInChildren<Hurtbox>().DisableHitbox();
         }
 
-        void AnimationEnd()
+        void AnimationIsHitStart()
         {
-            if(!GetComponentInParent<Health>().isDead)
+            playerInputHandler.takeMovement = false;
+        }
+
+        void AnimationIsHitEnd()
+        {
+            if (!GetComponentInParent<Health>().isDead)
             {
-                playerInputHandler.takeAttacks = true;
                 playerInputHandler.takeMovement = true;
-                playerInputHandler.takeRotation = true;
-                GetComponentInParent<PlayerInputAttacks>().PerformQueuedAttack();
             }
         }
     }

@@ -44,33 +44,20 @@ namespace Game.Combat
                     source.PlayOneShot(attackClips[3]);
                     break;
                 case Attacks.Direction.Shield:
-                    StartShielding();
+                    StartShielded();
                     break;
             }
         }
 
-        void StartShielding()
+        void StartShielded()
         {
             isShielded = true;
-            anim.SetBool("isShielding", true);
-
-            if (tag == "Player")
-            {
-                playerInputHandler.takeAttacks = false;
-                playerInputHandler.takeMovement = false;
-            }
+            anim.SetTrigger("Shield");
         }
 
-        public void StopShielding()
+        public void StopShielded()
         {
             isShielded = false;
-            anim.SetBool("isShielding", false);
-
-            if (tag == "Player" && !GetComponentInChildren<Health>().isDead)
-            {
-                playerInputHandler.takeAttacks = true;
-                playerInputHandler.takeMovement = true;
-            }
         }
     }
 }

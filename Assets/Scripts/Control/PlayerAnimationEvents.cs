@@ -33,12 +33,9 @@ namespace Game.Control
                 playerInputHandler.takeMovement = true;
                 playerInputHandler.takeRotation = true;
                 GetComponentInParent<PlayerInputAttacks>().PerformQueuedAttack();
-            } else
-            {
-                playerInputHandler.takeAttacks = false;
-                playerInputHandler.takeMovement = false;
-                playerInputHandler.takeRotation = false;
             }
+
+            GetComponentInParent<TriggerAttacks>().StopShielded();
         }
 
         void AnimationAttackHitStart()

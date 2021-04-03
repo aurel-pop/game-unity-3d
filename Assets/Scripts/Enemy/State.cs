@@ -10,7 +10,7 @@ namespace Game.Enemy
     {
         public enum STATE { Idle, Chase, Attack, Hit, MoveBack, Dead, Won }
         public enum Event { Enter, Update, Exit }
-        protected STATE state;
+        public STATE state;
         protected Event phase;
 
         protected GameObject npc;
@@ -33,7 +33,11 @@ namespace Game.Enemy
             player = _player;
         }
 
-        public virtual void Enter() { phase = Event.Update; }
+        public virtual void Enter()
+        {
+            Debug.Log(state);
+            phase = Event.Update;
+        }
         public virtual void Update()
         {
             UpdateAnimator();
@@ -163,7 +167,7 @@ namespace Game.Enemy
             agent.isStopped = true;
             Attacks.Direction attack = Attacks.Direction.None;
 
-            int rng = Random.Range(0, 100);
+            int rng = Random.Range(0, 200);
 
             if (rng < 25)
             {
@@ -177,9 +181,13 @@ namespace Game.Enemy
             {
                 attack = Attacks.Direction.Up;
             }
-            else
+            else if (rng >= 75 && rng < 100)
             {
                 attack = Attacks.Direction.Down;
+            }
+            else
+            {
+                attack = Attacks.Direction.Shield;
             }
 
             npc.GetComponent<TriggerAttacks>().TriggerAttack(attack);

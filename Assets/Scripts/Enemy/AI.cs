@@ -26,15 +26,10 @@ namespace Game.Enemy
 
         void Update()
         {
-            if (health.isDead)
-            {
-                Died();
-            }
-
             currentState = currentState.Process();
         }
 
-        void Died()
+        public void Die()
         {
             currentState = new Dead(gameObject, agent, anim, player);
             GetComponentInChildren<Hurtbox>().DisableHitbox();
@@ -53,6 +48,7 @@ namespace Game.Enemy
 
         void AnimationEnd()
         {
+            GetComponentInParent<TriggerAttacks>().StopShielded();
             currentState.Exit();
         }
 

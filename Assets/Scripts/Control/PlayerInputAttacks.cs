@@ -43,7 +43,7 @@ namespace Game.Control
                 isShielding = true;
                 AskForAttack();
             };
-            inputs.Player.RMBEnd.performed += ctx => CancelShielding();
+            inputs.Player.RMBEnd.performed += ctx => isShielding = false;
 
             //Controller
             inputs.Player.ControllerVector.performed += ctx =>
@@ -67,7 +67,7 @@ namespace Game.Control
                 isShielding = true;
                 AskForAttack();
             };
-            inputs.Player.ControllerLTEnd.performed += ctx => CancelShielding();
+            inputs.Player.ControllerLTEnd.performed += ctx => isShielding = false;
         }
 
         void Start()
@@ -119,17 +119,10 @@ namespace Game.Control
                 attack = Attacks.Direction.Up;
             else if (inputVectorDelta.y < -minDelta)
                 attack = Attacks.Direction.Down;
-
-            if (isShielding)
+            else if (isShielding)
                 attack = Attacks.Direction.Shield;
 
             return attack;
-        }
-
-        void CancelShielding()
-        {
-            isShielding = false;
-            GetComponentInChildren<TriggerAttacks>().StopShielding();
         }
 
         public void PerformQueuedAttack()

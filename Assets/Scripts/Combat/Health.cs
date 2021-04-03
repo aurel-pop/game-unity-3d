@@ -1,4 +1,5 @@
 using Game.Control;
+using Game.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,11 @@ namespace Game.Combat
         {
             isDead = true;
             GetComponentInChildren<Animator>().SetTrigger("Die");
+
+            if (tag == "AI")
+            {
+                GetComponent<AI>().Die();
+            }
         }
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Game.Control
 {
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(PlayerInputHandler))]
     public class PlayerInputAttacks : MonoBehaviour
     {
         public float minDeltaMouse;

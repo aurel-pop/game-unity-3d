@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Game.Movement
 {
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(PlayerInputHandler))]
     public class PlayerMovement : MonoBehaviour
     {
         [Range(0.0f, 20.0f)] public float moveSpeed;

@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Game.Control
 {
+    [RequireComponent(typeof(Animator))]
     public class PlayerAnimationEvents : MonoBehaviour
     {
         PlayerInputHandler playerInputHandler;

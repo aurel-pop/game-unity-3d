@@ -14,9 +14,9 @@ namespace Game.Combat
         {
             if (!GetComponentInParent<TriggerAttacks>().isShielded)
             {
+                GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[0]);
                 GetComponentInParent<Animator>().SetTrigger("Hit");
                 GetComponentInParent<Health>().Value -= 40;
-                GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[0]);
             } else
             {
                 GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[1]);

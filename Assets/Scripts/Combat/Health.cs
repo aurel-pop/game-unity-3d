@@ -1,4 +1,3 @@
-using Game.Control;
 using Game.Enemy;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,34 +10,27 @@ namespace Game.Combat
         [SerializeField] int maxHealth;
         [SerializeField] ProgressBarPro healthBar;
 
-        PlayerInputHandler playerInputHandler;
-        int health;
+        int _health;
         public bool isDead;
 
-        public int Value
+        public int Current
         {
-            get => health;
+            get => _health;
             set
             {
-                health = Mathf.Clamp(value, 0, maxHealth);
-                healthBar.SetValue(health, maxHealth);
+                _health = Mathf.Clamp(value, 0, maxHealth);
+                healthBar.SetValue(_health, maxHealth);
 
-                if (health < 1)
+                if (_health <= 0)
                 {
                     Die();
                 }
             }
         }
 
-        void Awake()
-        {
-            playerInputHandler = GetComponentInParent<PlayerInputHandler>();
-        }
-
         void Start()
         {
-            health = maxHealth;
-            isDead = false;
+            _health = maxHealth;
         }
 
         void Die()

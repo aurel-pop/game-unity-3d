@@ -6,7 +6,7 @@ namespace Game.Core
     {
         Transform player;
 
-        private void Awake()
+        void Start()
         {
             player = GameObject.FindWithTag("Player").transform;
         }

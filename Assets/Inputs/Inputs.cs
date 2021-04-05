@@ -27,7 +27,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ControllerMove"",
+                    ""name"": ""GamepadMove"",
                     ""type"": ""PassThrough"",
                     ""id"": ""b677b776-dc6b-4d39-a226-7aa022665066"",
                     ""expectedControlType"": ""Vector2"",
@@ -99,7 +99,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ControllerRTStart"",
+                    ""name"": ""GamepadRTStart"",
                     ""type"": ""Button"",
                     ""id"": ""e6d5d91c-06c5-4d46-900f-699d38fce810"",
                     ""expectedControlType"": ""Button"",
@@ -107,7 +107,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ControllerRTEnd"",
+                    ""name"": ""GamepadRTEnd"",
                     ""type"": ""Button"",
                     ""id"": ""0ee0a86d-a9c9-4947-9846-63deeacfcd3a"",
                     ""expectedControlType"": ""Button"",
@@ -115,7 +115,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ControllerLTStart"",
+                    ""name"": ""GamepadLTStart"",
                     ""type"": ""Button"",
                     ""id"": ""e5f8b2a2-d8e8-4990-87e6-42f47af7f937"",
                     ""expectedControlType"": ""Button"",
@@ -123,7 +123,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ControllerLTEnd"",
+                    ""name"": ""GamepadLTEnd"",
                     ""type"": ""Button"",
                     ""id"": ""12e122fa-0f69-48d8-be47-d2a65a5a899e"",
                     ""expectedControlType"": ""Button"",
@@ -131,7 +131,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ControllerVector"",
+                    ""name"": ""GamepadVector"",
                     ""type"": ""PassThrough"",
                     ""id"": ""a746bf3f-6b9a-4c44-aa38-07b92d52b5e1"",
                     ""expectedControlType"": ""Vector2"",
@@ -246,7 +246,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ControllerRTStart"",
+                    ""action"": ""GamepadRTStart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -257,7 +257,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""ControllerVector"",
+                    ""action"": ""GamepadVector"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -268,7 +268,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ControllerRTEnd"",
+                    ""action"": ""GamepadRTEnd"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -290,7 +290,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ControllerLTStart"",
+                    ""action"": ""GamepadLTStart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -301,7 +301,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ControllerLTEnd"",
+                    ""action"": ""GamepadLTEnd"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -356,7 +356,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""ControllerMove"",
+                    ""action"": ""GamepadMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -935,7 +935,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_MouseMove = m_Player.FindAction("MouseMove", throwIfNotFound: true);
-        m_Player_ControllerMove = m_Player.FindAction("ControllerMove", throwIfNotFound: true);
+        m_Player_GamepadMove = m_Player.FindAction("GamepadMove", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_LMBStart = m_Player.FindAction("LMBStart", throwIfNotFound: true);
         m_Player_LMBHold = m_Player.FindAction("LMBHold", throwIfNotFound: true);
@@ -944,11 +944,11 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Player_RMBEnd = m_Player.FindAction("RMBEnd", throwIfNotFound: true);
         m_Player_MouseVector = m_Player.FindAction("MouseVector", throwIfNotFound: true);
         m_Player_MouseVectorDelta = m_Player.FindAction("MouseVectorDelta", throwIfNotFound: true);
-        m_Player_ControllerRTStart = m_Player.FindAction("ControllerRTStart", throwIfNotFound: true);
-        m_Player_ControllerRTEnd = m_Player.FindAction("ControllerRTEnd", throwIfNotFound: true);
-        m_Player_ControllerLTStart = m_Player.FindAction("ControllerLTStart", throwIfNotFound: true);
-        m_Player_ControllerLTEnd = m_Player.FindAction("ControllerLTEnd", throwIfNotFound: true);
-        m_Player_ControllerVector = m_Player.FindAction("ControllerVector", throwIfNotFound: true);
+        m_Player_GamepadRTStart = m_Player.FindAction("GamepadRTStart", throwIfNotFound: true);
+        m_Player_GamepadRTEnd = m_Player.FindAction("GamepadRTEnd", throwIfNotFound: true);
+        m_Player_GamepadLTStart = m_Player.FindAction("GamepadLTStart", throwIfNotFound: true);
+        m_Player_GamepadLTEnd = m_Player.FindAction("GamepadLTEnd", throwIfNotFound: true);
+        m_Player_GamepadVector = m_Player.FindAction("GamepadVector", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1011,7 +1011,7 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_MouseMove;
-    private readonly InputAction m_Player_ControllerMove;
+    private readonly InputAction m_Player_GamepadMove;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_LMBStart;
     private readonly InputAction m_Player_LMBHold;
@@ -1020,17 +1020,17 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RMBEnd;
     private readonly InputAction m_Player_MouseVector;
     private readonly InputAction m_Player_MouseVectorDelta;
-    private readonly InputAction m_Player_ControllerRTStart;
-    private readonly InputAction m_Player_ControllerRTEnd;
-    private readonly InputAction m_Player_ControllerLTStart;
-    private readonly InputAction m_Player_ControllerLTEnd;
-    private readonly InputAction m_Player_ControllerVector;
+    private readonly InputAction m_Player_GamepadRTStart;
+    private readonly InputAction m_Player_GamepadRTEnd;
+    private readonly InputAction m_Player_GamepadLTStart;
+    private readonly InputAction m_Player_GamepadLTEnd;
+    private readonly InputAction m_Player_GamepadVector;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
         public PlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @MouseMove => m_Wrapper.m_Player_MouseMove;
-        public InputAction @ControllerMove => m_Wrapper.m_Player_ControllerMove;
+        public InputAction @GamepadMove => m_Wrapper.m_Player_GamepadMove;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @LMBStart => m_Wrapper.m_Player_LMBStart;
         public InputAction @LMBHold => m_Wrapper.m_Player_LMBHold;
@@ -1039,11 +1039,11 @@ public class @Inputs : IInputActionCollection, IDisposable
         public InputAction @RMBEnd => m_Wrapper.m_Player_RMBEnd;
         public InputAction @MouseVector => m_Wrapper.m_Player_MouseVector;
         public InputAction @MouseVectorDelta => m_Wrapper.m_Player_MouseVectorDelta;
-        public InputAction @ControllerRTStart => m_Wrapper.m_Player_ControllerRTStart;
-        public InputAction @ControllerRTEnd => m_Wrapper.m_Player_ControllerRTEnd;
-        public InputAction @ControllerLTStart => m_Wrapper.m_Player_ControllerLTStart;
-        public InputAction @ControllerLTEnd => m_Wrapper.m_Player_ControllerLTEnd;
-        public InputAction @ControllerVector => m_Wrapper.m_Player_ControllerVector;
+        public InputAction @GamepadRTStart => m_Wrapper.m_Player_GamepadRTStart;
+        public InputAction @GamepadRTEnd => m_Wrapper.m_Player_GamepadRTEnd;
+        public InputAction @GamepadLTStart => m_Wrapper.m_Player_GamepadLTStart;
+        public InputAction @GamepadLTEnd => m_Wrapper.m_Player_GamepadLTEnd;
+        public InputAction @GamepadVector => m_Wrapper.m_Player_GamepadVector;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1056,9 +1056,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @MouseMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseMove;
                 @MouseMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseMove;
                 @MouseMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseMove;
-                @ControllerMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerMove;
-                @ControllerMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerMove;
-                @ControllerMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerMove;
+                @GamepadMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadMove;
+                @GamepadMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadMove;
+                @GamepadMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadMove;
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
@@ -1083,21 +1083,21 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @MouseVectorDelta.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseVectorDelta;
                 @MouseVectorDelta.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseVectorDelta;
                 @MouseVectorDelta.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseVectorDelta;
-                @ControllerRTStart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerRTStart;
-                @ControllerRTStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerRTStart;
-                @ControllerRTStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerRTStart;
-                @ControllerRTEnd.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerRTEnd;
-                @ControllerRTEnd.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerRTEnd;
-                @ControllerRTEnd.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerRTEnd;
-                @ControllerLTStart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerLTStart;
-                @ControllerLTStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerLTStart;
-                @ControllerLTStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerLTStart;
-                @ControllerLTEnd.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerLTEnd;
-                @ControllerLTEnd.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerLTEnd;
-                @ControllerLTEnd.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerLTEnd;
-                @ControllerVector.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerVector;
-                @ControllerVector.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerVector;
-                @ControllerVector.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnControllerVector;
+                @GamepadRTStart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadRTStart;
+                @GamepadRTStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadRTStart;
+                @GamepadRTStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadRTStart;
+                @GamepadRTEnd.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadRTEnd;
+                @GamepadRTEnd.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadRTEnd;
+                @GamepadRTEnd.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadRTEnd;
+                @GamepadLTStart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadLTStart;
+                @GamepadLTStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadLTStart;
+                @GamepadLTStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadLTStart;
+                @GamepadLTEnd.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadLTEnd;
+                @GamepadLTEnd.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadLTEnd;
+                @GamepadLTEnd.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadLTEnd;
+                @GamepadVector.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadVector;
+                @GamepadVector.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadVector;
+                @GamepadVector.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGamepadVector;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1105,9 +1105,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @MouseMove.started += instance.OnMouseMove;
                 @MouseMove.performed += instance.OnMouseMove;
                 @MouseMove.canceled += instance.OnMouseMove;
-                @ControllerMove.started += instance.OnControllerMove;
-                @ControllerMove.performed += instance.OnControllerMove;
-                @ControllerMove.canceled += instance.OnControllerMove;
+                @GamepadMove.started += instance.OnGamepadMove;
+                @GamepadMove.performed += instance.OnGamepadMove;
+                @GamepadMove.canceled += instance.OnGamepadMove;
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
@@ -1132,21 +1132,21 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @MouseVectorDelta.started += instance.OnMouseVectorDelta;
                 @MouseVectorDelta.performed += instance.OnMouseVectorDelta;
                 @MouseVectorDelta.canceled += instance.OnMouseVectorDelta;
-                @ControllerRTStart.started += instance.OnControllerRTStart;
-                @ControllerRTStart.performed += instance.OnControllerRTStart;
-                @ControllerRTStart.canceled += instance.OnControllerRTStart;
-                @ControllerRTEnd.started += instance.OnControllerRTEnd;
-                @ControllerRTEnd.performed += instance.OnControllerRTEnd;
-                @ControllerRTEnd.canceled += instance.OnControllerRTEnd;
-                @ControllerLTStart.started += instance.OnControllerLTStart;
-                @ControllerLTStart.performed += instance.OnControllerLTStart;
-                @ControllerLTStart.canceled += instance.OnControllerLTStart;
-                @ControllerLTEnd.started += instance.OnControllerLTEnd;
-                @ControllerLTEnd.performed += instance.OnControllerLTEnd;
-                @ControllerLTEnd.canceled += instance.OnControllerLTEnd;
-                @ControllerVector.started += instance.OnControllerVector;
-                @ControllerVector.performed += instance.OnControllerVector;
-                @ControllerVector.canceled += instance.OnControllerVector;
+                @GamepadRTStart.started += instance.OnGamepadRTStart;
+                @GamepadRTStart.performed += instance.OnGamepadRTStart;
+                @GamepadRTStart.canceled += instance.OnGamepadRTStart;
+                @GamepadRTEnd.started += instance.OnGamepadRTEnd;
+                @GamepadRTEnd.performed += instance.OnGamepadRTEnd;
+                @GamepadRTEnd.canceled += instance.OnGamepadRTEnd;
+                @GamepadLTStart.started += instance.OnGamepadLTStart;
+                @GamepadLTStart.performed += instance.OnGamepadLTStart;
+                @GamepadLTStart.canceled += instance.OnGamepadLTStart;
+                @GamepadLTEnd.started += instance.OnGamepadLTEnd;
+                @GamepadLTEnd.performed += instance.OnGamepadLTEnd;
+                @GamepadLTEnd.canceled += instance.OnGamepadLTEnd;
+                @GamepadVector.started += instance.OnGamepadVector;
+                @GamepadVector.performed += instance.OnGamepadVector;
+                @GamepadVector.canceled += instance.OnGamepadVector;
             }
         }
     }
@@ -1304,7 +1304,7 @@ public class @Inputs : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMouseMove(InputAction.CallbackContext context);
-        void OnControllerMove(InputAction.CallbackContext context);
+        void OnGamepadMove(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnLMBStart(InputAction.CallbackContext context);
         void OnLMBHold(InputAction.CallbackContext context);
@@ -1313,11 +1313,11 @@ public class @Inputs : IInputActionCollection, IDisposable
         void OnRMBEnd(InputAction.CallbackContext context);
         void OnMouseVector(InputAction.CallbackContext context);
         void OnMouseVectorDelta(InputAction.CallbackContext context);
-        void OnControllerRTStart(InputAction.CallbackContext context);
-        void OnControllerRTEnd(InputAction.CallbackContext context);
-        void OnControllerLTStart(InputAction.CallbackContext context);
-        void OnControllerLTEnd(InputAction.CallbackContext context);
-        void OnControllerVector(InputAction.CallbackContext context);
+        void OnGamepadRTStart(InputAction.CallbackContext context);
+        void OnGamepadRTEnd(InputAction.CallbackContext context);
+        void OnGamepadLTStart(InputAction.CallbackContext context);
+        void OnGamepadLTEnd(InputAction.CallbackContext context);
+        void OnGamepadVector(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

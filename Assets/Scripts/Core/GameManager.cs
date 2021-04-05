@@ -10,20 +10,15 @@ namespace Game.Core
         Health playerHealth;
         public bool isGameOver;
 
-        void Awake()
-        {
-            playerHealth = GameObject.FindWithTag("Player").GetComponentInChildren<Health>();
-        }
-
         void Start()
         {
-
+            playerHealth = GameObject.FindWithTag("Player").GetComponentInChildren<Health>();
         }
 
         void Update()
 
         {
-            if (playerHealth.Value < 1 && !isGameOver)
+            if (playerHealth.Current < 1 && !isGameOver)
             {
                 GameOver();
             }

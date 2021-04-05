@@ -8,9 +8,9 @@ namespace Game.Enemy
 {
     public class State
     {
-        public enum STATE { Idle, Chase, Attack, Hit, MoveBack, Dead, Won }
+        public enum States { Idle, Chase, Attack, Hit, MoveBack, Dead, Won }
         public enum Event { Enter, Update, Exit }
-        public STATE state;
+        public States name;
         protected Event phase;
 
         protected GameObject npc;
@@ -35,7 +35,7 @@ namespace Game.Enemy
 
         public virtual void Enter()
         {
-            Debug.Log(state);
+            Debug.Log(name);
             phase = Event.Update;
         }
         public virtual void Update()
@@ -90,7 +90,7 @@ namespace Game.Enemy
     {
         public Idle(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Idle;
+            name = States.Idle;
         }
 
         public override void Enter()
@@ -119,7 +119,7 @@ namespace Game.Enemy
     {
         public Chase(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Chase;
+            name = States.Chase;
             agent.isStopped = false;
         }
 
@@ -159,35 +159,35 @@ namespace Game.Enemy
     {
         public Attack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Attack;
+            name = States.Attack;
         }
 
         public override void Enter()
         {
             agent.isStopped = true;
-            Attacks.Direction attack = Attacks.Direction.None;
+            Combat.Attack.Directions attack = Combat.Attack.Directions.None;
 
             int rng = Random.Range(0, 200);
 
             if (rng < 25)
             {
-                attack = Attacks.Direction.Right;
+                attack = Combat.Attack.Directions.Right;
             }
             else if (rng >= 25 && rng < 50)
             {
-                attack = Attacks.Direction.Left;
+                attack = Combat.Attack.Directions.Left;
             }
             else if (rng >= 50 && rng < 75)
             {
-                attack = Attacks.Direction.Up;
+                attack = Combat.Attack.Directions.Up;
             }
             else if (rng >= 75 && rng < 100)
             {
-                attack = Attacks.Direction.Down;
+                attack = Combat.Attack.Directions.Down;
             }
             else
             {
-                attack = Attacks.Direction.Shield;
+                attack = Combat.Attack.Directions.Shield;
             }
 
             npc.GetComponent<TriggerAttacks>().TriggerAttack(attack);
@@ -226,7 +226,7 @@ namespace Game.Enemy
     {
         public Hit(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Hit;
+            name = States.Hit;
         }
 
         public override void Enter()
@@ -258,7 +258,7 @@ namespace Game.Enemy
     {
         public MoveBack(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.MoveBack;
+            name = States.MoveBack;
         }
 
         public override void Enter()
@@ -281,7 +281,7 @@ namespace Game.Enemy
     {
         public Dead(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Dead;
+            name = States.Dead;
         }
 
         public override void Enter()
@@ -304,7 +304,7 @@ namespace Game.Enemy
     {
         public Won(GameObject _npc, NavMeshAgent _agent, Animator _anim, Transform _player) : base(_npc, _agent, _anim, _player)
         {
-            state = STATE.Won;
+            name = States.Won;
         }
 
         public override void Enter()

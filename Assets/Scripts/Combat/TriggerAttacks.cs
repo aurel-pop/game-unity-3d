@@ -1,4 +1,3 @@
-using Game.Control;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,43 +6,37 @@ namespace Game.Combat
 {
     public class TriggerAttacks : MonoBehaviour
     {
-        [SerializeField] AudioClip[] attackClips;
+        [SerializeField] AudioClip[] attackAudioClips;
         [HideInInspector] public bool isShielded;
 
-        PlayerInputHandler playerInputHandler;
-        AudioSource source;
-        Animator anim;
+        AudioSource audioSource;
+        Animator animator;
 
-        void Awake()
+        void Start()
         {
-            playerInputHandler = GetComponentInParent<PlayerInputHandler>();
-            source = GetComponentInParent<AudioSource>();
-            anim = GetComponentInChildren<Animator>();
+            audioSource = GetComponentInParent<AudioSource>();
+            animator = GetComponentInChildren<Animator>();
         }
 
-        public void TriggerAttack(Attacks.Direction dir)
+        public void TriggerAttack(Attack.Directions dir)
         {
             switch (dir)
             {
-                case Attacks.Direction.None:
+                case Attack.Directions.None:
                     break;
-                case Attacks.Direction.Right:
-                    anim.SetTrigger("AttackRight");
-                    source.PlayOneShot(attackClips[0]);
+                case Attack.Directions.Right:
+                    animator.SetTrigger("AttackRight");
                     break;
-                case Attacks.Direction.Left:
-                    anim.SetTrigger("AttackLeft");
-                    source.PlayOneShot(attackClips[1]);
+                case Attack.Directions.Left:
+                    animator.SetTrigger("AttackLeft");
                     break;
-                case Attacks.Direction.Up:
-                    anim.SetTrigger("AttackUp");
-                    source.PlayOneShot(attackClips[2]);
+                case Attack.Directions.Up:
+                    animator.SetTrigger("AttackUp");
                     break;
-                case Attacks.Direction.Down:
-                    anim.SetTrigger("AttackDown");
-                    source.PlayOneShot(attackClips[3]);
+                case Attack.Directions.Down:
+                    animator.SetTrigger("AttackDown");
                     break;
-                case Attacks.Direction.Shield:
+                case Attack.Directions.Shield:
                     StartShielded();
                     break;
             }
@@ -52,7 +45,7 @@ namespace Game.Combat
         void StartShielded()
         {
             isShielded = true;
-            anim.SetTrigger("Shield");
+            animator.SetTrigger("Shield");
         }
 
         public void StopShielded()

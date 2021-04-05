@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ControllerMove",
+                    "name": "GamepadMove",
                     "type": "PassThrough",
                     "id": "b677b776-dc6b-4d39-a226-7aa022665066",
                     "expectedControlType": "Vector2",
@@ -86,7 +86,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ControllerRTStart",
+                    "name": "GamepadRTStart",
                     "type": "Button",
                     "id": "e6d5d91c-06c5-4d46-900f-699d38fce810",
                     "expectedControlType": "Button",
@@ -94,7 +94,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ControllerRTEnd",
+                    "name": "GamepadRTEnd",
                     "type": "Button",
                     "id": "0ee0a86d-a9c9-4947-9846-63deeacfcd3a",
                     "expectedControlType": "Button",
@@ -102,7 +102,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ControllerLTStart",
+                    "name": "GamepadLTStart",
                     "type": "Button",
                     "id": "e5f8b2a2-d8e8-4990-87e6-42f47af7f937",
                     "expectedControlType": "Button",
@@ -110,7 +110,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ControllerLTEnd",
+                    "name": "GamepadLTEnd",
                     "type": "Button",
                     "id": "12e122fa-0f69-48d8-be47-d2a65a5a899e",
                     "expectedControlType": "Button",
@@ -118,7 +118,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ControllerVector",
+                    "name": "GamepadVector",
                     "type": "PassThrough",
                     "id": "a746bf3f-6b9a-4c44-aa38-07b92d52b5e1",
                     "expectedControlType": "Vector2",
@@ -233,7 +233,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ControllerRTStart",
+                    "action": "GamepadRTStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -244,7 +244,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "ControllerVector",
+                    "action": "GamepadVector",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -255,7 +255,7 @@
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ControllerRTEnd",
+                    "action": "GamepadRTEnd",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -277,7 +277,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ControllerLTStart",
+                    "action": "GamepadLTStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -288,7 +288,7 @@
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ControllerLTEnd",
+                    "action": "GamepadLTEnd",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -343,7 +343,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "ControllerMove",
+                    "action": "GamepadMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

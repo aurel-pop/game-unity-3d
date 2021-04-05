@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Game.Movement
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(PlayerInputHandler))]
+    [RequireComponent(typeof(InputHandler))]
     public class PlayerMovement : MonoBehaviour
     {
         [Range(0.0f, 20.0f)] public float moveSpeed;
@@ -14,25 +14,30 @@ namespace Game.Movement
         public Transform groundChecker;
         public LayerMask ground;
 
-        PlayerInputHandler playerInputHandler;
+        InputHandler inputHandler;
         CharacterController characterController;
-        Animator anim;
-        Inputs inputs;
-        Vector2 inputMoveVector;
+        Animator animator;
+
+        Inputs _inputs;
+        Vector2 _inputMoveVector;
 
         void Awake()
         {
+            _inputs = new Inputs();
+            _inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            _inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+        }
+
+        void Start()
+        {
             characterController = GetComponent<CharacterController>();
-            anim = GetComponentInChildren<Animator>();
-            playerInputHandler = GetComponent<PlayerInputHandler>();
-            inputs = new Inputs();
-            inputs.Player.MouseMove.performed += ctx => inputMoveVector = ctx.ReadValue<Vector2>();
-            inputs.Player.ControllerMove.performed += ctx => inputMoveVector = ctx.ReadValue<Vector2>();
+            animator = GetComponentInChildren<Animator>();
+            inputHandler = InputHandler.Instance;
         }
 
         void Update()
         {
-            if (playerInputHandler.takeMovement)
+            if (inputHandler.TakeMovement)
             {
                 MoveCharacter();
             }
@@ -42,7 +47,7 @@ namespace Game.Movement
 
         void MoveCharacter()
         {
-            Vector3 velocity = (inputMoveVector.y * transform.forward) + (inputMoveVector.x * transform.right);
+            Vector3 velocity = (_inputMoveVector.y * transform.forward) + (_inputMoveVector.x * transform.right);
             characterController.Move(velocity * (moveSpeed * Time.deltaTime));
         }
 
@@ -50,18 +55,18 @@ namespace Game.Movement
         {
             Vector3 velocity = characterController.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-            anim.SetFloat("forwardSpeed", Mathf.Lerp(anim.GetFloat("forwardSpeed"), localVelocity.magnitude, animationSpeed * Time.deltaTime));
+            animator.SetFloat("forwardSpeed", Mathf.Lerp(animator.GetFloat("forwardSpeed"), localVelocity.magnitude, animationSpeed * Time.deltaTime));
         }
 
         #region Enable / Disable
         void OnEnable()
         {
-            inputs.Enable();
+            _inputs.Enable();
         }
 
         void OnDisable()
         {
-            inputs.Disable();
+            _inputs.Disable();
         }
         #endregion
     }

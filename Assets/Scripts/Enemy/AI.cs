@@ -20,7 +20,6 @@ namespace Game.Enemy
             anim = GetComponent<Animator>();
             player = GameObject.FindWithTag("Player").transform;
             health = GetComponent<Health>();
-
             currentState = new Idle(gameObject, agent, anim, player);
         }
 

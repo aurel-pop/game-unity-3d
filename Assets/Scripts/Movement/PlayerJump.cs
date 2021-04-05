@@ -6,12 +6,12 @@ namespace Game.Movement
     public class PlayerJump : MonoBehaviour
     {
         public float jumpHeight;
-        bool isGrounded;
-        Inputs inputs;
+        bool _isGrounded;
+        Inputs _inputs;
 
         void Awake()
         {
-            inputs = new Inputs();
+            _inputs = new Inputs();
         }
 
         void Update()
@@ -27,12 +27,12 @@ namespace Game.Movement
         #region Enable / Disable
         void OnEnable()
         {
-            inputs.Enable();
+            _inputs.Enable();
         }
 
         void OnDisable()
         {
-            inputs.Disable();
+            _inputs.Disable();
         }
         #endregion
     }

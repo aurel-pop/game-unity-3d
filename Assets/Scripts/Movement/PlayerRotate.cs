@@ -7,21 +7,26 @@ namespace Game.Movement
     public class PlayerRotate : MonoBehaviour
     {
         [Range(0.0f, 20.0f)] public float rotateSpeed = 4f;
-        PlayerInputHandler playerInputHandler;
-        Inputs inputs;
-        Vector2 inputMoveVector;
+        InputHandler inputHandler;
+
+        Inputs _inputs;
+        Vector2 _inputMoveVector;
 
         void Awake()
         {
-            playerInputHandler = GetComponentInParent<PlayerInputHandler>();
-            inputs = new Inputs();
-            inputs.Player.MouseMove.performed += ctx => inputMoveVector = ctx.ReadValue<Vector2>();
-            inputs.Player.ControllerMove.performed += ctx => inputMoveVector = ctx.ReadValue<Vector2>();
+            _inputs = new Inputs();
+            _inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            _inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+        }
+
+        void Start()
+        {
+            inputHandler = InputHandler.Instance;
         }
 
         void Update()
         {
-            if (playerInputHandler.takeRotation)
+            if (inputHandler.TakeRotation)
             {
                 RotateCharacter();
             }
@@ -29,8 +34,8 @@ namespace Game.Movement
 
         void RotateCharacter()
         {
-            Vector3 direction = new Vector3(inputMoveVector.x, 0f, inputMoveVector.y);
-            if (inputMoveVector.magnitude > 0)
+            Vector3 direction = new Vector3(_inputMoveVector.x, 0f, _inputMoveVector.y);
+            if (_inputMoveVector.magnitude > 0)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotateSpeed);
             }
@@ -39,12 +44,12 @@ namespace Game.Movement
         #region Enable / Disable
         void OnEnable()
         {
-            inputs.Enable();
+            _inputs.Enable();
         }
 
         void OnDisable()
         {
-            inputs.Disable();
+            _inputs.Disable();
         }
         #endregion
     }

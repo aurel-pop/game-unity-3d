@@ -1,5 +1,4 @@
-﻿using Game.Control;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,18 +7,17 @@ namespace Game.Combat
     public class Hurtbox : MonoBehaviour
     {
         public SphereCollider hitbox;
-        public AudioClip[] isHitClips;
+        public AudioClip[] isHitAudioClips;
 
         void OnTriggerEnter(Collider other)
         {
             if (!GetComponentInParent<TriggerAttacks>().isShielded)
             {
-                GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[0]);
                 GetComponentInParent<Animator>().SetTrigger("Hit");
-                GetComponentInParent<Health>().Value -= 40;
+                GetComponentInParent<Health>().Current -= 40;
             } else
             {
-                GetComponentInParent<AudioSource>().PlayOneShot(isHitClips[1]);
+
             }
         }
 

@@ -5,6 +5,6 @@ namespace Game.Combat
 {
     public static class Attack
     {
-        public enum Directions { None, Right, Left, Up, Down, Shield }
+        public enum Directions { None, Light, Combo, Heavy, Super, Enrage, Shield }
     }
 }

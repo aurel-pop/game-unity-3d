@@ -1,3 +1,4 @@
+using Game.Core;
 using Game.Enemy;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ namespace Game.Combat
     {
         [SerializeField] int maxHealth;
         [SerializeField] ProgressBarPro healthBar;
-
         int _health;
         public bool isDead;
 
@@ -36,9 +36,13 @@ namespace Game.Combat
         void Die()
         {
             isDead = true;
-            GetComponentInChildren<Animator>().SetTrigger("Die");
+            GetComponentInChildren<Animator>().SetTrigger("die");
 
-            if (tag == "AI")
+            if (tag == "Player")
+            {
+                GameManager.Instance.GameOver();
+            }
+            else if (tag == "AI")
             {
                 GetComponent<AI>().Die();
             }

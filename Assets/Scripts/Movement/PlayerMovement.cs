@@ -13,31 +13,23 @@ namespace Game.Movement
         [Range(0.0f, 3.0f)] public float groundDistance;
         public Transform groundChecker;
         public LayerMask ground;
-
-        InputHandler inputHandler;
         CharacterController characterController;
         Animator animator;
-
-        Inputs _inputs;
+        Inputs Inputs;
         Vector2 _inputMoveVector;
-
-        void Awake()
-        {
-            _inputs = new Inputs();
-            _inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
-            _inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
-        }
 
         void Start()
         {
+            Inputs = InputHandler.Instance.Inputs;
             characterController = GetComponent<CharacterController>();
             animator = GetComponentInChildren<Animator>();
-            inputHandler = InputHandler.Instance;
+            Inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            Inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
         }
 
         void Update()
         {
-            if (inputHandler.TakeMovement)
+            if (InputHandler.Instance.TakeMovement)
             {
                 MoveCharacter();
             }
@@ -57,17 +49,5 @@ namespace Game.Movement
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
             animator.SetFloat("forwardSpeed", Mathf.Lerp(animator.GetFloat("forwardSpeed"), localVelocity.magnitude, animationSpeed * Time.deltaTime));
         }
-
-        #region Enable / Disable
-        void OnEnable()
-        {
-            _inputs.Enable();
-        }
-
-        void OnDisable()
-        {
-            _inputs.Disable();
-        }
-        #endregion
     }
 }

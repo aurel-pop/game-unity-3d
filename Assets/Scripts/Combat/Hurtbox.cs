@@ -13,11 +13,8 @@ namespace Game.Combat
         {
             if (!GetComponentInParent<TriggerAttacks>().isShielded)
             {
-                GetComponentInParent<Animator>().SetTrigger("Hit");
+                GetComponentInParent<Animator>().SetTrigger("hit");
                 GetComponentInParent<Health>().Current -= 40;
-            } else
-            {
-
             }
         }
 

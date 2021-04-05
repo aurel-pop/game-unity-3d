@@ -10,76 +10,67 @@ namespace Game.Control
     {
         public float minDeltaMouse;
         public float minDeltaGamepad;
-
         float _minDelta;
-        Inputs _inputs;
+        Inputs Inputs;
         Vector2 _inputVector;
         Vector2 _inputVectorStarted;
         Vector2 _inputVectorDelta;
         Vector2 _inputGamepadVector;
         bool _controllerRTHold;
         bool _controllerAttackReset = true;
-
         CharacterController characterController;
-        InputHandler inputHandler;
-
         Attack.Directions _queuedAttack = Attack.Directions.None;
         bool _isShielding;
 
-        void Awake()
+        void Start()
         {
-            _inputs = new Inputs();
+            Inputs = InputHandler.Instance.Inputs;
+            characterController = GetComponent<CharacterController>();
 
             //Mouse
-            _inputs.Player.MouseVector.performed += ctx => _inputVector = ctx.ReadValue<Vector2>();
-            _inputs.Player.LMBStart.performed += ctx => _inputVectorStarted = _inputVector;
-            _inputs.Player.LMBEnd.performed += ctx =>
+            Inputs.Player.MouseVector.performed += ctx => _inputVector = ctx.ReadValue<Vector2>();
+            Inputs.Player.LMBStart.performed += ctx => _inputVectorStarted = _inputVector;
+            Inputs.Player.LMBEnd.performed += ctx =>
             {
                 _inputVectorDelta = _inputVector - _inputVectorStarted;
                 _minDelta = minDeltaMouse;
                 AskForAttack();
             };
-            _inputs.Player.RMBStart.performed += ctx =>
+            Inputs.Player.RMBStart.performed += ctx =>
             {
                 _isShielding = true;
                 AskForAttack();
             };
-            _inputs.Player.RMBEnd.performed += ctx => _isShielding = false;
+            Inputs.Player.RMBEnd.performed += ctx => _isShielding = false;
 
             //Gamepad
-            _inputs.Player.GamepadVector.performed += ctx =>
+            Inputs.Player.GamepadVector.performed += ctx =>
             {
                 _inputGamepadVector = ctx.ReadValue<Vector2>();
                 _inputVectorDelta = _inputGamepadVector;
                 _minDelta = minDeltaGamepad;
             };
-            _inputs.Player.GamepadRTStart.performed += ctx =>
+            Inputs.Player.GamepadRTStart.performed += ctx =>
             {
                 _controllerRTHold = true;
                 AskForAttack();
             };
-            _inputs.Player.GamepadRTEnd.performed += ctx =>
+            Inputs.Player.GamepadRTEnd.performed += ctx =>
             {
                 _controllerRTHold = false;
                 _controllerAttackReset = true;
             };
-            _inputs.Player.GamepadLTStart.performed += ctx =>
+            Inputs.Player.GamepadLTStart.performed += ctx =>
             {
                 _isShielding = true;
                 AskForAttack();
             };
-            _inputs.Player.GamepadLTEnd.performed += ctx => _isShielding = false;
-        }
-
-        void Start()
-        {
-            characterController = GetComponent<CharacterController>();
-            inputHandler = InputHandler.Instance;
+            Inputs.Player.GamepadLTEnd.performed += ctx => _isShielding = false;
         }
 
         void Update()
         {
-            if (inputHandler.name == InputHandler.InputMethods.Gamepad)
+            if (InputHandler.Instance.Method == InputHandler.InputMethods.Gamepad)
             {
                 CheckControllerAttack();
             }
@@ -101,7 +92,7 @@ namespace Game.Control
 
         void AskForAttack()
         {
-            if (inputHandler.TakeAttacks)
+            if (InputHandler.Instance.TakeAttacks)
                 GetComponentInChildren<TriggerAttacks>().TriggerAttack(CalculateDirection());
             else
                 _queuedAttack = CalculateDirection();
@@ -109,18 +100,18 @@ namespace Game.Control
 
         Attack.Directions CalculateDirection()
         {
-            Attack.Directions attack = Attack.Directions.Left;
+            Attack.Directions attack = Attack.Directions.Light;
 
             if (_isShielding)
                 attack = Attack.Directions.Shield;
             else if (_inputVectorDelta.x > _minDelta && Mathf.Abs(_inputVectorDelta.x) > Mathf.Abs(_inputVectorDelta.y))
-                attack = Attack.Directions.Right;
+                attack = Attack.Directions.Combo;
             else if (_inputVectorDelta.x < -_minDelta && Mathf.Abs(_inputVectorDelta.x) > Mathf.Abs(_inputVectorDelta.y))
-                attack = Attack.Directions.Left;
+                attack = Attack.Directions.Light;
             else if (_inputVectorDelta.y > _minDelta)
-                attack = Attack.Directions.Up;
+                attack = Attack.Directions.Super;
             else if (_inputVectorDelta.y < -_minDelta)
-                attack = Attack.Directions.Down;
+                attack = Attack.Directions.Heavy;
 
             return attack;
         }
@@ -137,12 +128,12 @@ namespace Game.Control
         #region Enable / Disable
         void OnEnable()
         {
-            _inputs.Enable();
+            Inputs.Enable();
         }
 
         void OnDisable()
         {
-            _inputs.Disable();
+            Inputs.Disable();
         }
         #endregion
     }

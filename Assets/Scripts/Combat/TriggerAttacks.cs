@@ -24,17 +24,20 @@ namespace Game.Combat
             {
                 case Attack.Directions.None:
                     break;
-                case Attack.Directions.Right:
-                    animator.SetTrigger("AttackRight");
+                case Attack.Directions.Light:
+                    animator.SetTrigger("light");
                     break;
-                case Attack.Directions.Left:
-                    animator.SetTrigger("AttackLeft");
+                case Attack.Directions.Combo:
+                    animator.SetTrigger("combo");
                     break;
-                case Attack.Directions.Up:
-                    animator.SetTrigger("AttackUp");
+                case Attack.Directions.Heavy:
+                    animator.SetTrigger("heavy");
                     break;
-                case Attack.Directions.Down:
-                    animator.SetTrigger("AttackDown");
+                case Attack.Directions.Super:
+                    animator.SetTrigger("super");
+                    break;
+                case Attack.Directions.Enrage:
+                    animator.SetTrigger("enrage");
                     break;
                 case Attack.Directions.Shield:
                     StartShielded();
@@ -45,7 +48,7 @@ namespace Game.Combat
         void StartShielded()
         {
             isShielded = true;
-            animator.SetTrigger("Shield");
+            animator.SetTrigger("shield");
         }
 
         public void StopShielded()

@@ -171,19 +171,19 @@ namespace Game.Enemy
 
             if (rng < 25)
             {
-                attack = Combat.Attack.Directions.Right;
+                attack = Combat.Attack.Directions.Combo;
             }
             else if (rng >= 25 && rng < 50)
             {
-                attack = Combat.Attack.Directions.Left;
+                attack = Combat.Attack.Directions.Light;
             }
             else if (rng >= 50 && rng < 75)
             {
-                attack = Combat.Attack.Directions.Up;
+                attack = Combat.Attack.Directions.Super;
             }
             else if (rng >= 75 && rng < 100)
             {
-                attack = Combat.Attack.Directions.Down;
+                attack = Combat.Attack.Directions.Heavy;
             }
             else
             {

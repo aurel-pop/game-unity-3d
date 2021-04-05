@@ -7,26 +7,19 @@ namespace Game.Movement
     public class PlayerRotate : MonoBehaviour
     {
         [Range(0.0f, 20.0f)] public float rotateSpeed = 4f;
-        InputHandler inputHandler;
-
-        Inputs _inputs;
+        Inputs Inputs;
         Vector2 _inputMoveVector;
-
-        void Awake()
-        {
-            _inputs = new Inputs();
-            _inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
-            _inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
-        }
 
         void Start()
         {
-            inputHandler = InputHandler.Instance;
+            Inputs = InputHandler.Instance.Inputs;
+            Inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            Inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
         }
 
         void Update()
         {
-            if (inputHandler.TakeRotation)
+            if (InputHandler.Instance.TakeRotation)
             {
                 RotateCharacter();
             }
@@ -40,17 +33,5 @@ namespace Game.Movement
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotateSpeed);
             }
         }
-
-        #region Enable / Disable
-        void OnEnable()
-        {
-            _inputs.Enable();
-        }
-
-        void OnDisable()
-        {
-            _inputs.Disable();
-        }
-        #endregion
     }
 }

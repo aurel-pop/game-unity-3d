@@ -9,31 +9,24 @@ namespace Game.Core
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimationEvents : MonoBehaviour
     {
-        InputHandler inputHandler;
-
-        void Start()
-        {
-            inputHandler = InputHandler.Instance;
-        }
-
         void AnimationStart()
         {
-            inputHandler.TakeAttacks = false;
+            InputHandler.Instance.TakeAttacks = false;
         }
 
         void AnimationDelayedStart()
         {
-            inputHandler.TakeMovement = false;
-            inputHandler.TakeRotation = false;
+            InputHandler.Instance.TakeMovement = false;
+            InputHandler.Instance.TakeRotation = false;
         }
 
         void AnimationEnd()
         {
             if(!GetComponentInParent<Health>().isDead)
             {
-                inputHandler.TakeAttacks = true;
-                inputHandler.TakeMovement = true;
-                inputHandler.TakeRotation = true;
+                InputHandler.Instance.TakeAttacks = true;
+                InputHandler.Instance.TakeMovement = true;
+                InputHandler.Instance.TakeRotation = true;
                 GetComponentInParent<InputAttacks>().PerformQueuedAttack();
             }
 
@@ -52,14 +45,14 @@ namespace Game.Core
 
         void AnimationIsHitStart()
         {
-            inputHandler.TakeMovement = false;
+            InputHandler.Instance.TakeMovement = false;
         }
 
         void AnimationIsHitEnd()
         {
             if (!GetComponentInParent<Health>().isDead)
             {
-                inputHandler.TakeMovement = true;
+                InputHandler.Instance.TakeMovement = true;
             }
         }
     }

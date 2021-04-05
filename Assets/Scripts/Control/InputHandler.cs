@@ -5,57 +5,49 @@ namespace Game.Control
 {
     public class InputHandler : MonoBehaviour
     {
-        static InputHandler _instance;
-        public static InputHandler Instance { get => _instance; }
-
-        bool _takeAttacks = true;
-        public bool TakeAttacks { get => _takeAttacks; set => _takeAttacks = value; }
-
-        bool _takeMovement = true;
-        public bool TakeMovement { get => _takeMovement; set => _takeMovement = value; }
-
-        bool _takeRotation = true;
-        public bool TakeRotation { get => _takeRotation; set => _takeRotation = value; }
-
-        Inputs _inputs;
+        public static InputHandler Instance { get; private set; }
+        public bool TakeAttacks { get; set; } = true;
+        public bool TakeMovement { get; set; } = true;
+        public bool TakeRotation { get ; set; } = true;
+        public Inputs Inputs { get; private set; }
         public enum InputMethods { Mouse, Gamepad };
-        public InputMethods name = InputMethods.Mouse;
+        public InputMethods Method { get; private set; } = InputMethods.Mouse;
 
         private void Awake()
         {
-            if (_instance != null && _instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(this.gameObject);
                 return;
             }
 
-            _instance = this;
+            Instance = this;
             DontDestroyOnLoad(this.gameObject);
 
-            _inputs = new Inputs();
+            Inputs = new Inputs();
 
             //Mouse
-            _inputs.Player.MouseMove.performed += ctx => name = InputMethods.Mouse;
-            _inputs.Player.MouseVector.performed += ctx => name = InputMethods.Mouse;
-            _inputs.Player.LMBStart.performed += ctx => name = InputMethods.Mouse;
-            _inputs.Player.RMBStart.performed += ctx => name = InputMethods.Mouse;
+            Inputs.Player.MouseMove.performed += ctx => Method = InputMethods.Mouse;
+            Inputs.Player.MouseVector.performed += ctx => Method = InputMethods.Mouse;
+            Inputs.Player.LMBStart.performed += ctx => Method = InputMethods.Mouse;
+            Inputs.Player.RMBStart.performed += ctx => Method = InputMethods.Mouse;
 
             //Gamepad
-            _inputs.Player.GamepadMove.performed += ctx => name = InputMethods.Gamepad;
-            _inputs.Player.GamepadVector.performed += ctx => name = InputMethods.Gamepad;
-            _inputs.Player.GamepadRTStart.performed += ctx => name = InputMethods.Gamepad;
-            _inputs.Player.GamepadLTStart.performed += ctx => name = InputMethods.Gamepad;
+            Inputs.Player.GamepadMove.performed += ctx => Method = InputMethods.Gamepad;
+            Inputs.Player.GamepadVector.performed += ctx => Method = InputMethods.Gamepad;
+            Inputs.Player.GamepadRTStart.performed += ctx => Method = InputMethods.Gamepad;
+            Inputs.Player.GamepadLTStart.performed += ctx => Method = InputMethods.Gamepad;
         }
 
         #region Enable / Disable
         void OnEnable()
         {
-            _inputs.Enable();
+            Inputs.Enable();
         }
 
         void OnDisable()
         {
-            _inputs.Disable();
+            Inputs.Disable();
         }
         #endregion
     }

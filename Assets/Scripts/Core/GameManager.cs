@@ -7,26 +7,30 @@ namespace Game.Core
 {
     public class GameManager : MonoBehaviour
     {
+        public static GameManager Instance { get; private set; }
+        public bool IsGameOver { get; private set; }
         Health playerHealth;
-        public bool isGameOver;
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
 
         void Start()
         {
             playerHealth = GameObject.FindWithTag("Player").GetComponentInChildren<Health>();
         }
 
-        void Update()
-
-        {
-            if (playerHealth.Current < 1 && !isGameOver)
-            {
-                GameOver();
-            }
-        }
-
         public void GameOver()
         {
-            isGameOver = true;
+            IsGameOver = true;
         }
     }
 }

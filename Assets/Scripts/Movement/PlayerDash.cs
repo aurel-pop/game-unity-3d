@@ -1,3 +1,4 @@
+using Game.Control;
 using System.Collections;
 using UnityEngine;
 
@@ -8,28 +9,22 @@ namespace Game.Movement
         public float dashDistance;
         public Vector3 drag;
         public float dashDuration;
-
+        Inputs Inputs;
         CharacterController characterController;
         Animator animator;
-
         const float _GRAVITY = -9.81f;
         Vector3 _velocity;
-        Inputs _inputs;
         Vector2 _inputMoveVector;
         Vector3 _movement;
 
-        void Awake()
-        {
-            _inputs = new Inputs();
-            _inputs.Player.Dash.performed += ctx => Dash();
-            _inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
-            _inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
-        }
-
         void Start()
         {
+            Inputs = InputHandler.Instance.Inputs;
             characterController = GetComponentInParent<CharacterController>();
             animator = GetComponentInParent<Animator>();
+            Inputs.Player.Dash.performed += ctx => Dash();
+            Inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            Inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
         }
 
         void Update()
@@ -40,10 +35,11 @@ namespace Game.Movement
         void CalculateDrag()
         {
             _movement = (_inputMoveVector.y * transform.forward) + (_inputMoveVector.x * transform.right);
+            Vector3 currentDrag = drag * Time.deltaTime;
             _velocity.y += _GRAVITY * Time.deltaTime;
-            _velocity.x /= 1 + drag.x * Time.deltaTime;
-            _velocity.y /= 1 + drag.y * Time.deltaTime;
-            _velocity.z /= 1 + drag.z * Time.deltaTime;
+            _velocity.x /= 1 + currentDrag.x;
+            _velocity.y /= 1 + currentDrag.y;
+            _velocity.z /= 1 + currentDrag.z;
             characterController.Move(_velocity * Time.deltaTime);
         }
 
@@ -59,17 +55,5 @@ namespace Game.Movement
             yield return new WaitForSeconds(this.dashDuration);
             animator.SetBool("isDashing", false);
         }
-
-        #region Enable / Disable
-        void OnEnable()
-        {
-            _inputs.Enable();
-        }
-
-        void OnDisable()
-        {
-            _inputs.Disable();
-        }
-        #endregion
     }
 }

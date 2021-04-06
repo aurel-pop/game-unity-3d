@@ -4,24 +4,29 @@ namespace Control
 {
     public class InputHandler : MonoBehaviour
     {
+        public enum InputMethods
+        {
+            Mouse,
+            Gamepad
+        }
+
         public static InputHandler Instance { get; private set; }
         public bool TakeAttacks { get; set; } = true;
         public bool TakeMovement { get; set; } = true;
-        public bool TakeRotation { get ; set; } = true;
+        public bool TakeRotation { get; set; } = true;
         public Inputs Inputs { get; private set; }
-        public enum InputMethods { Mouse, Gamepad };
         public InputMethods Method { get; private set; } = InputMethods.Mouse;
 
         private void Awake()
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
                 return;
             }
 
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
 
             Inputs = new Inputs();
 

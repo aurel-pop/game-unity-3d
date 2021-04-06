@@ -7,11 +7,11 @@ namespace Enemy
 {
     public class AI : MonoBehaviour
     {
+        [SerializeField] private Text stateTextUI;
         private NavMeshAgent _agent;
-        private Transform _player;
         private Animator _anim;
         private State _currentState;
-        [SerializeField] private Text stateTextUI;
+        private Transform _player;
 
         private void Start()
         {
@@ -41,12 +41,10 @@ namespace Enemy
 
         private void AnimationStart()
         {
-
         }
 
         private void AnimationDelayedStart()
         {
-
         }
 
         private void AnimationEnd()
@@ -72,7 +70,6 @@ namespace Enemy
 
         private void AnimationIsHitEnd()
         {
-            
         }
     }
 }

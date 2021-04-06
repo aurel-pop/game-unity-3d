@@ -4,20 +4,20 @@ namespace Combat
 {
     public class Hurtbox : MonoBehaviour
     {
-        [SerializeField] private SphereCollider hitbox;
         private static readonly int Hit = Animator.StringToHash("hit");
-
-        private void OnTriggerEnter(Collider other)
-        {
-            Health health = GetComponentInParent<Health>();
-            if (health.IsShielded) return;
-            GetComponentInParent<Animator>().SetTrigger(Hit);
-            health.Current -= 100;
-        }
+        [SerializeField] private SphereCollider hitbox;
 
         private void Start()
         {
             hitbox.enabled = false;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            var health = GetComponentInParent<Health>();
+            if (health.IsShielded) return;
+            GetComponentInParent<Animator>().SetTrigger(Hit);
+            health.Current -= 100;
         }
 
         public void EnableHitbox()

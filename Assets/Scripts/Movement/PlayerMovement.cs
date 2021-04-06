@@ -7,16 +7,16 @@ namespace Movement
     [RequireComponent(typeof(InputHandler))]
     public class PlayerMovement : MonoBehaviour
     {
+        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
         [Range(0.0f, 20.0f)] public float moveSpeed;
         [Range(0.0f, 20.0f)] public float animationSpeed;
         [Range(0.0f, 3.0f)] public float groundDistance;
         public Transform groundChecker;
         public LayerMask ground;
-        private CharacterController _characterController;
         private Animator _animator;
-        private Inputs _inputs;
+        private CharacterController _characterController;
         private Vector2 _inputMoveVector;
-        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
+        private Inputs _inputs;
 
         private void Start()
         {
@@ -29,25 +29,23 @@ namespace Movement
 
         private void Update()
         {
-            if (InputHandler.Instance.TakeMovement)
-            {
-                MoveCharacter();
-            }
+            if (InputHandler.Instance.TakeMovement) MoveCharacter();
 
             UpdateAnimator();
         }
 
         private void MoveCharacter()
         {
-            Vector3 velocity = (_inputMoveVector.y * transform.forward) + (_inputMoveVector.x * transform.right);
+            var velocity = _inputMoveVector.y * transform.forward + _inputMoveVector.x * transform.right;
             _characterController.Move(velocity * (moveSpeed * Time.deltaTime));
         }
 
         private void UpdateAnimator()
         {
-            Vector3 velocity = _characterController.velocity;
-            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-            _animator.SetFloat(ForwardSpeed, Mathf.Lerp(_animator.GetFloat(ForwardSpeed), localVelocity.magnitude, animationSpeed * Time.deltaTime));
+            var velocity = _characterController.velocity;
+            var localVelocity = transform.InverseTransformDirection(velocity);
+            _animator.SetFloat(ForwardSpeed,
+                Mathf.Lerp(_animator.GetFloat(ForwardSpeed), localVelocity.magnitude, animationSpeed * Time.deltaTime));
         }
     }
 }

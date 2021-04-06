@@ -1,23 +1,24 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Combat
 {
     public class TriggerAttacks : MonoBehaviour
     {
-        [SerializeField] private AudioClip[] attackAudioClips;
-        private AudioSource _audioSource;
-        private Animator _animator;
         private static readonly int Light = Animator.StringToHash("light");
         private static readonly int Combo = Animator.StringToHash("combo");
         private static readonly int Heavy = Animator.StringToHash("heavy");
         private static readonly int Super = Animator.StringToHash("super");
         private static readonly int Enrage = Animator.StringToHash("enrage");
         private static readonly int Shield = Animator.StringToHash("shield");
+        [SerializeField] private AudioClip[] attackAudioClips;
+        private Animator _animator;
+        private AudioSource _audioSource;
+        private Health _health;
 
         private void Start()
         {
+            _health = GetComponentInChildren<Health>();
             _audioSource = GetComponentInParent<AudioSource>();
             _animator = GetComponentInChildren<Animator>();
         }
@@ -44,7 +45,7 @@ namespace Combat
                     _animator.SetTrigger(Enrage);
                     break;
                 case Attack.Directions.Shield:
-                    GetComponentInChildren<Health>().IsShielded = true;
+                    _health.IsShielded = true;
                     _animator.SetTrigger(Shield);
                     break;
                 default:

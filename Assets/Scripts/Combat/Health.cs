@@ -7,12 +7,12 @@ namespace Combat
 {
     public class Health : MonoBehaviour
     {
+        private static readonly int Die1 = Animator.StringToHash("die");
         [SerializeField] private int maxHealth;
         [SerializeField] private ProgressBarPro healthBar;
         private int _health;
         public bool IsDead { get; private set; }
         public bool IsShielded { get; set; }
-        private static readonly int Die1 = Animator.StringToHash("die");
 
         public int Current
         {
@@ -22,10 +22,7 @@ namespace Combat
                 _health = Mathf.Clamp(value, 0, maxHealth);
                 healthBar.SetValue(_health, maxHealth);
 
-                if (_health <= 0)
-                {
-                    Die();
-                }
+                if (_health <= 0) Die();
             }
         }
 

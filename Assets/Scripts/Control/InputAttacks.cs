@@ -9,17 +9,17 @@ namespace Control
     {
         public float minDeltaMouse;
         public float minDeltaGamepad;
-        private float _minDelta;
+        private bool _controllerAttackReset = true;
+        private bool _controllerRTHold;
+        private Vector2 _inputGamepadVector;
         private Inputs _inputs;
         private Vector2 _inputVector;
-        private Vector2 _inputVectorStarted;
         private Vector2 _inputVectorDelta;
-        private Vector2 _inputGamepadVector;
-        private bool _controllerRTHold;
-        private bool _controllerAttackReset = true;
-        private TriggerAttacks _triggerAttacks;
-        private Attack.Directions _queuedAttack = Attack.Directions.None;
+        private Vector2 _inputVectorStarted;
         private bool _isShielding;
+        private float _minDelta;
+        private Attack.Directions _queuedAttack = Attack.Directions.None;
+        private TriggerAttacks _triggerAttacks;
 
         private void Start()
         {
@@ -69,16 +69,16 @@ namespace Control
 
         private void Update()
         {
-            if (InputHandler.Instance.Method == InputHandler.InputMethods.Gamepad)
-            {
-                CheckControllerAttack();
-            }
+            if (InputHandler.Instance.Method == InputHandler.InputMethods.Gamepad) CheckControllerAttack();
         }
 
         private void CheckControllerAttack()
         {
-            if (!_controllerAttackReset && Mathf.Abs(_inputGamepadVector.x) < minDeltaGamepad && Mathf.Abs(_inputGamepadVector.y) < minDeltaGamepad)
+            if (!_controllerAttackReset && Mathf.Abs(_inputGamepadVector.x) < minDeltaGamepad &&
+                Mathf.Abs(_inputGamepadVector.y) < minDeltaGamepad)
+            {
                 _controllerAttackReset = true;
+            }
             else
             {
                 if (!_controllerRTHold || !_controllerAttackReset) return;
@@ -97,13 +97,14 @@ namespace Control
 
         private Attack.Directions CalculateDirection()
         {
-            Attack.Directions attack = Attack.Directions.Light;
+            var attack = Attack.Directions.Light;
 
             if (_isShielding)
                 attack = Attack.Directions.Shield;
             else if (_inputVectorDelta.x > _minDelta && Mathf.Abs(_inputVectorDelta.x) > Mathf.Abs(_inputVectorDelta.y))
                 attack = Attack.Directions.Combo;
-            else if (_inputVectorDelta.x < -_minDelta && Mathf.Abs(_inputVectorDelta.x) > Mathf.Abs(_inputVectorDelta.y))
+            else if (_inputVectorDelta.x < -_minDelta &&
+                     Mathf.Abs(_inputVectorDelta.x) > Mathf.Abs(_inputVectorDelta.y))
                 attack = Attack.Directions.Light;
             else if (_inputVectorDelta.y > _minDelta)
                 attack = Attack.Directions.Super;
@@ -112,7 +113,7 @@ namespace Control
 
             return attack;
         }
-        
+
         public void PerformQueuedAttack()
         {
             if (_queuedAttack == Attack.Directions.None) return;

@@ -6,9 +6,22 @@ namespace Enemy
 {
     public class State
     {
-        public enum States { Idle, Chase, Attack, Hit, Dead, Won }
-        protected enum Event { Enter, Update, Exit }
+        public enum States
+        {
+            Idle,
+            Chase,
+            Attack,
+            Hit,
+            Dead,
+            Won
+        }
         public States name;
+        protected enum Event
+        {
+            Enter,
+            Update,
+            Exit
+        }
         protected Event phase;
 
         protected readonly GameObject npc;

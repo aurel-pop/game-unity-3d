@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
@@ -23,21 +26,21 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerJump.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerMovement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputHandler.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/HealthBar.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/CameraController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerDash.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputAttacks.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Attack.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerRotate.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/TriggerAttacks.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Health.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/PlayerAnimationEvents.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/HealthBar.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Hurtbox.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Health.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/TriggerAttacks.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputAttacks.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputHandler.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/CameraController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/PlayerAnimationEvents.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/AI.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerRotate.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/State.cs" />
     </changedPaths>
   </component>
@@ -51,7 +54,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+    <property name="settings.editor.selected.configurable" value="RiderCSharpLiveTemplatesSettingsId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -87,6 +90,8 @@
       <workItem from="1617730076300" duration="2690000" />
       <workItem from="1617737684897" duration="3911000" />
       <workItem from="1617741673416" duration="6000" />
+      <workItem from="1617741904984" duration="347000" />
+      <workItem from="1617742508865" duration="1924000" />
     </task>
     <servers />
   </component>

@@ -8,11 +8,12 @@ namespace Core
     public class PlayerAnimationEvents : MonoBehaviour
     {
         private Health _health;
+
         private void Start()
         {
             _health = GetComponentInParent<Health>();
         }
-        
+
         private void AnimationStart()
         {
             InputHandler.Instance.TakeAttacks = false;

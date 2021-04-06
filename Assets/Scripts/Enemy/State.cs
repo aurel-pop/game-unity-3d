@@ -6,9 +6,9 @@ namespace Enemy
 {
     public class State
     {
-        protected enum States { Idle, Chase, Attack, Hit, Dead, Won }
+        public enum States { Idle, Chase, Attack, Hit, Dead, Won }
         protected enum Event { Enter, Update, Exit }
-        protected States name;
+        public States name;
         protected Event phase;
 
         protected readonly GameObject npc;
@@ -16,6 +16,7 @@ namespace Enemy
         protected readonly Transform player;
         protected readonly NavMeshAgent navMeshAgent;
         protected State nextState;
+        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
         private const float VisDist = 15.0f;
         private const float VisAngle = 90.0f;
@@ -33,7 +34,6 @@ namespace Enemy
 
         protected virtual void Enter()
         {
-            Debug.Log(name);
             phase = Event.Update;
         }
 
@@ -41,24 +41,23 @@ namespace Enemy
         {
             UpdateAnimator();
         }
-        public virtual void Exit() { phase = Event.Exit; }
+
+        public virtual void Exit()
+        {
+            phase = Event.Exit;
+        }
 
         public State Process()
         {
             if (phase == Event.Enter) Enter();
             if (phase == Event.Update) Update();
-            if (phase == Event.Exit)
-            {
-                Exit();
-                return nextState;
-            }
-            return this;
+            return phase == Event.Exit ? nextState : this;
         }
 
         private void UpdateAnimator()
         {
             Vector3 localVelocity = npc.transform.InverseTransformDirection(navMeshAgent.velocity);
-            animator.SetFloat("forwardSpeed", localVelocity.z * 10 / navMeshAgent.speed);
+            animator.SetFloat(ForwardSpeed, localVelocity.z * 10 / navMeshAgent.speed);
         }
 
         protected bool CanSeePlayer()

@@ -1,6 +1,7 @@
 using Combat;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace Enemy
 {
@@ -10,6 +11,7 @@ namespace Enemy
         private Transform _player;
         private Animator _anim;
         private State _currentState;
+        [SerializeField] private Text stateTextUI;
 
         private void Start()
         {
@@ -22,6 +24,12 @@ namespace Enemy
         private void Update()
         {
             _currentState = _currentState.Process();
+            UpdateStateUI();
+        }
+
+        private void UpdateStateUI()
+        {
+            stateTextUI.text = _currentState.name.ToString();
         }
 
         public void Die()

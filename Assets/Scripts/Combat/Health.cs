@@ -1,3 +1,4 @@
+using Control;
 using Core;
 using Enemy;
 using UnityEngine;
@@ -9,7 +10,8 @@ namespace Combat
         [SerializeField] private int maxHealth;
         [SerializeField] private ProgressBarPro healthBar;
         private int _health;
-        public bool isDead;
+        public bool IsDead { get; private set; }
+        public bool IsShielded { get; set; }
         private static readonly int Die1 = Animator.StringToHash("die");
 
         public int Current
@@ -34,11 +36,14 @@ namespace Combat
 
         private void Die()
         {
-            isDead = true;
+            IsDead = true;
             GetComponentInChildren<Animator>().SetTrigger(Die1);
 
             if (CompareTag("Player"))
             {
+                InputHandler.Instance.TakeAttacks = false;
+                InputHandler.Instance.TakeMovement = false;
+                InputHandler.Instance.TakeRotation = false;
                 GameManager.GameOver();
             }
             else if (CompareTag("AI"))

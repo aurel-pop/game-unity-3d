@@ -5,7 +5,7 @@ namespace Movement
 {
     public class PlayerRotate : MonoBehaviour
     {
-        [Range(0.0f, 20.0f)] public float rotateSpeed = 4f;
+        [SerializeField] [Range(0.0f, 20.0f)] private float rotateSpeed = 4f;
         private Inputs _inputs;
         private Vector2 _inputMoveVector;
 
@@ -27,8 +27,8 @@ namespace Movement
         private void RotateCharacter()
         {
             Vector3 direction = new Vector3(_inputMoveVector.x, 0f, _inputMoveVector.y);
-            if (!(_inputMoveVector.magnitude > 0)) return;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotateSpeed);
+            if (_inputMoveVector.magnitude > 0)
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotateSpeed);
         }
     }
 }

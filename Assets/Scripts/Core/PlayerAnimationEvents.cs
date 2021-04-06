@@ -7,6 +7,12 @@ namespace Core
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimationEvents : MonoBehaviour
     {
+        private Health _health;
+        private void Start()
+        {
+            _health = GetComponentInParent<Health>();
+        }
+        
         private void AnimationStart()
         {
             InputHandler.Instance.TakeAttacks = false;
@@ -20,15 +26,12 @@ namespace Core
 
         private void AnimationEnd()
         {
-            if(!GetComponentInParent<Health>().isDead)
-            {
-                InputHandler.Instance.TakeAttacks = true;
-                InputHandler.Instance.TakeMovement = true;
-                InputHandler.Instance.TakeRotation = true;
-                GetComponentInParent<InputAttacks>().PerformQueuedAttack();
-            }
-
-            GetComponentInParent<TriggerAttacks>().StopShielded();
+            if (_health.IsDead) return;
+            _health.IsShielded = false;
+            InputHandler.Instance.TakeAttacks = true;
+            InputHandler.Instance.TakeMovement = true;
+            InputHandler.Instance.TakeRotation = true;
+            GetComponentInParent<InputAttacks>().PerformQueuedAttack();
         }
 
         private void AnimationAttackHitStart()
@@ -48,7 +51,7 @@ namespace Core
 
         private void AnimationIsHitEnd()
         {
-            if (GetComponentInParent<Health>().isDead) return;
+            if (_health.IsDead) return;
             InputHandler.Instance.TakeMovement = true;
         }
     }

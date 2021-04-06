@@ -4,15 +4,15 @@ namespace Combat
 {
     public class Hurtbox : MonoBehaviour
     {
-        public SphereCollider hitbox;
-        public AudioClip[] isHitAudioClips;
+        [SerializeField] private SphereCollider hitbox;
         private static readonly int Hit = Animator.StringToHash("hit");
 
         private void OnTriggerEnter(Collider other)
         {
-            if (GetComponentInParent<TriggerAttacks>().IsShielded) return;
+            Health health = GetComponentInParent<Health>();
+            if (health.IsShielded) return;
             GetComponentInParent<Animator>().SetTrigger(Hit);
-            GetComponentInParent<Health>().Current -= 40;
+            health.Current -= 100;
         }
 
         private void Start()

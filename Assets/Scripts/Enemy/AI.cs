@@ -10,14 +10,12 @@ namespace Enemy
         private Transform _player;
         private Animator _anim;
         private State _currentState;
-        private Health _health;
 
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
             _anim = GetComponent<Animator>();
             _player = GameObject.FindWithTag("Player").transform;
-            _health = GetComponent<Health>();
             _currentState = new Idle(gameObject, _agent, _anim, _player);
         }
 
@@ -45,7 +43,7 @@ namespace Enemy
 
         private void AnimationEnd()
         {
-            GetComponentInParent<TriggerAttacks>().StopShielded();
+            GetComponentInChildren<Health>().IsShielded = false;
             _currentState.Exit();
         }
 

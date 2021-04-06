@@ -179,13 +179,9 @@ namespace Enemy
             {
                 attack = Combat.Attack.Directions.Super;
             }
-            else if (rng >= 75 && rng < 100)
-            {
-                attack = Combat.Attack.Directions.Heavy;
-            }
             else
             {
-                attack = Combat.Attack.Directions.Shield;
+                attack = Combat.Attack.Directions.Heavy;
             }
 
             npc.GetComponent<TriggerAttacks>().TriggerAttack(attack);
@@ -205,9 +201,9 @@ namespace Enemy
 
         public override void Exit()
         {
-            if (npc.GetComponent<Health>().isDead)
+            if (npc.GetComponent<Health>().IsDead)
                 nextState = new Dead(npc, agent, anim, player);
-            else if (player.GetComponentInChildren<Health>().isDead)
+            else if (player.GetComponentInChildren<Health>().IsDead)
                 nextState = new Won(npc, agent, anim, player);
             else if (CanAttackPlayer())
                 nextState = new Attack(npc, agent, anim, player);
@@ -239,7 +235,7 @@ namespace Enemy
 
         public override void Exit()
         {
-            if (npc.GetComponent<Health>().isDead)
+            if (npc.GetComponent<Health>().IsDead)
                 nextState = new Dead(npc, agent, anim, player);
             else if (CanAttackPlayer())
                 nextState = new Attack(npc, agent, anim, player);

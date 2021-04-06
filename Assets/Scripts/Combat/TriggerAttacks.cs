@@ -7,7 +7,6 @@ namespace Combat
     public class TriggerAttacks : MonoBehaviour
     {
         [SerializeField] private AudioClip[] attackAudioClips;
-        public bool IsShielded { get; private set; }
         private AudioSource _audioSource;
         private Animator _animator;
         private static readonly int Light = Animator.StringToHash("light");
@@ -45,17 +44,12 @@ namespace Combat
                     _animator.SetTrigger(Enrage);
                     break;
                 case Attack.Directions.Shield:
-                    IsShielded = true;
+                    GetComponentInChildren<Health>().IsShielded = true;
                     _animator.SetTrigger(Shield);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
             }
-        }
-
-        public void StopShielded()
-        {
-            IsShielded = false;
         }
     }
 }

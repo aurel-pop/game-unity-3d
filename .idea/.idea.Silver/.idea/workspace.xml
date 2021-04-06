@@ -32,13 +32,13 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerDash.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputAttacks.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Attack.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/State.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerRotate.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/TriggerAttacks.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/AI.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Health.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/PlayerAnimationEvents.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Hurtbox.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/State.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1qnsUQCxnkWvYAMftKKul7U84M6" />
@@ -85,6 +85,7 @@
       <workItem from="1617726710444" duration="2717000" />
       <workItem from="1617729827961" duration="101000" />
       <workItem from="1617730076300" duration="2690000" />
+      <workItem from="1617737684897" duration="727000" />
     </task>
     <servers />
   </component>

@@ -1,24 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Combat
+namespace Combat
 {
     public class Hurtbox : MonoBehaviour
     {
         public SphereCollider hitbox;
         public AudioClip[] isHitAudioClips;
+        private static readonly int Hit = Animator.StringToHash("hit");
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-            if (!GetComponentInParent<TriggerAttacks>().isShielded)
-            {
-                GetComponentInParent<Animator>().SetTrigger("hit");
-                GetComponentInParent<Health>().Current -= 40;
-            }
+            if (GetComponentInParent<TriggerAttacks>().IsShielded) return;
+            GetComponentInParent<Animator>().SetTrigger(Hit);
+            GetComponentInParent<Health>().Current -= 40;
         }
 
-        void Start()
+        private void Start()
         {
             hitbox.enabled = false;
         }

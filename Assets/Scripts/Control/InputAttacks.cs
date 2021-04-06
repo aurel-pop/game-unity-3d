@@ -1,8 +1,7 @@
-using System;
-using Game.Combat;
+using Combat;
 using UnityEngine;
 
-namespace Game.Control
+namespace Control
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(InputHandler))]
@@ -10,65 +9,65 @@ namespace Game.Control
     {
         public float minDeltaMouse;
         public float minDeltaGamepad;
-        float _minDelta;
-        Inputs Inputs;
-        Vector2 _inputVector;
-        Vector2 _inputVectorStarted;
-        Vector2 _inputVectorDelta;
-        Vector2 _inputGamepadVector;
-        bool _controllerRTHold;
-        bool _controllerAttackReset = true;
-        CharacterController characterController;
-        Attack.Directions _queuedAttack = Attack.Directions.None;
-        bool _isShielding;
+        private float _minDelta;
+        private Inputs _inputs;
+        private Vector2 _inputVector;
+        private Vector2 _inputVectorStarted;
+        private Vector2 _inputVectorDelta;
+        private Vector2 _inputGamepadVector;
+        private bool _controllerRTHold;
+        private bool _controllerAttackReset = true;
+        private TriggerAttacks _triggerAttacks;
+        private Attack.Directions _queuedAttack = Attack.Directions.None;
+        private bool _isShielding;
 
-        void Start()
+        private void Start()
         {
-            Inputs = InputHandler.Instance.Inputs;
-            characterController = GetComponent<CharacterController>();
+            _inputs = InputHandler.Instance.Inputs;
+            _triggerAttacks = GetComponentInChildren<TriggerAttacks>();
 
             //Mouse
-            Inputs.Player.MouseVector.performed += ctx => _inputVector = ctx.ReadValue<Vector2>();
-            Inputs.Player.LMBStart.performed += ctx => _inputVectorStarted = _inputVector;
-            Inputs.Player.LMBEnd.performed += ctx =>
+            _inputs.Player.MouseVector.performed += ctx => _inputVector = ctx.ReadValue<Vector2>();
+            _inputs.Player.LMBStart.performed += ctx => _inputVectorStarted = _inputVector;
+            _inputs.Player.LMBEnd.performed += ctx =>
             {
                 _inputVectorDelta = _inputVector - _inputVectorStarted;
                 _minDelta = minDeltaMouse;
                 AskForAttack();
             };
-            Inputs.Player.RMBStart.performed += ctx =>
+            _inputs.Player.RMBStart.performed += ctx =>
             {
                 _isShielding = true;
                 AskForAttack();
             };
-            Inputs.Player.RMBEnd.performed += ctx => _isShielding = false;
+            _inputs.Player.RMBEnd.performed += ctx => _isShielding = false;
 
             //Gamepad
-            Inputs.Player.GamepadVector.performed += ctx =>
+            _inputs.Player.GamepadVector.performed += ctx =>
             {
                 _inputGamepadVector = ctx.ReadValue<Vector2>();
                 _inputVectorDelta = _inputGamepadVector;
                 _minDelta = minDeltaGamepad;
             };
-            Inputs.Player.GamepadRTStart.performed += ctx =>
+            _inputs.Player.GamepadRTStart.performed += ctx =>
             {
                 _controllerRTHold = true;
                 AskForAttack();
             };
-            Inputs.Player.GamepadRTEnd.performed += ctx =>
+            _inputs.Player.GamepadRTEnd.performed += ctx =>
             {
                 _controllerRTHold = false;
                 _controllerAttackReset = true;
             };
-            Inputs.Player.GamepadLTStart.performed += ctx =>
+            _inputs.Player.GamepadLTStart.performed += ctx =>
             {
                 _isShielding = true;
                 AskForAttack();
             };
-            Inputs.Player.GamepadLTEnd.performed += ctx => _isShielding = false;
+            _inputs.Player.GamepadLTEnd.performed += ctx => _isShielding = false;
         }
 
-        void Update()
+        private void Update()
         {
             if (InputHandler.Instance.Method == InputHandler.InputMethods.Gamepad)
             {
@@ -76,29 +75,27 @@ namespace Game.Control
             }
         }
 
-        void CheckControllerAttack()
+        private void CheckControllerAttack()
         {
             if (!_controllerAttackReset && Mathf.Abs(_inputGamepadVector.x) < minDeltaGamepad && Mathf.Abs(_inputGamepadVector.y) < minDeltaGamepad)
                 _controllerAttackReset = true;
             else
             {
-                if (_controllerRTHold && _controllerAttackReset)
-                {
-                    AskForAttack();
-                    _controllerAttackReset = false;
-                }
+                if (!_controllerRTHold || !_controllerAttackReset) return;
+                AskForAttack();
+                _controllerAttackReset = false;
             }
         }
 
-        void AskForAttack()
+        private void AskForAttack()
         {
             if (InputHandler.Instance.TakeAttacks)
-                GetComponentInChildren<TriggerAttacks>().TriggerAttack(CalculateDirection());
+                _triggerAttacks.TriggerAttack(CalculateDirection());
             else
                 _queuedAttack = CalculateDirection();
         }
 
-        Attack.Directions CalculateDirection()
+        private Attack.Directions CalculateDirection()
         {
             Attack.Directions attack = Attack.Directions.Light;
 
@@ -115,26 +112,12 @@ namespace Game.Control
 
             return attack;
         }
-
+        
         public void PerformQueuedAttack()
         {
-            if (_queuedAttack != Attack.Directions.None)
-            {
-                GetComponentInChildren<TriggerAttacks>().TriggerAttack(_queuedAttack);
-                _queuedAttack = Attack.Directions.None;
-            }
+            if (_queuedAttack == Attack.Directions.None) return;
+            GetComponentInChildren<TriggerAttacks>().TriggerAttack(_queuedAttack);
+            _queuedAttack = Attack.Directions.None;
         }
-
-        #region Enable / Disable
-        void OnEnable()
-        {
-            Inputs.Enable();
-        }
-
-        void OnDisable()
-        {
-            Inputs.Disable();
-        }
-        #endregion
     }
 }

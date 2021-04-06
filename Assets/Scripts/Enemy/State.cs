@@ -1,10 +1,8 @@
-using Game.Combat;
-using System.Collections;
-using System.Collections.Generic;
+using Combat;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Game.Enemy
+namespace Enemy
 {
     public class State
     {

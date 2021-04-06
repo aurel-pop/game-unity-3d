@@ -1,23 +1,22 @@
-using Game.Control;
-using System;
+using Control;
 using UnityEngine;
 
-namespace Game.Movement
+namespace Movement
 {
     public class PlayerRotate : MonoBehaviour
     {
         [Range(0.0f, 20.0f)] public float rotateSpeed = 4f;
-        Inputs Inputs;
-        Vector2 _inputMoveVector;
+        private Inputs _inputs;
+        private Vector2 _inputMoveVector;
 
-        void Start()
+        private void Start()
         {
-            Inputs = InputHandler.Instance.Inputs;
-            Inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
-            Inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            _inputs = InputHandler.Instance.Inputs;
+            _inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            _inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
         }
 
-        void Update()
+        private void Update()
         {
             if (InputHandler.Instance.TakeRotation)
             {
@@ -25,13 +24,11 @@ namespace Game.Movement
             }
         }
 
-        void RotateCharacter()
+        private void RotateCharacter()
         {
             Vector3 direction = new Vector3(_inputMoveVector.x, 0f, _inputMoveVector.y);
-            if (_inputMoveVector.magnitude > 0)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotateSpeed);
-            }
+            if (!(_inputMoveVector.magnitude > 0)) return;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotateSpeed);
         }
     }
 }

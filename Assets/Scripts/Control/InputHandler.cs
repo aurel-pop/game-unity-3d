@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Game.Control
+namespace Control
 {
     public class InputHandler : MonoBehaviour
     {
@@ -39,16 +38,14 @@ namespace Game.Control
             Inputs.Player.GamepadLTStart.performed += ctx => Method = InputMethods.Gamepad;
         }
 
-        #region Enable / Disable
-        void OnEnable()
+        private void OnEnable()
         {
             Inputs.Enable();
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             Inputs.Disable();
         }
-        #endregion
     }
 }

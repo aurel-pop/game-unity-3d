@@ -1,19 +1,19 @@
 using UnityEngine;
 
-namespace Game.Core
+namespace Core
 {
     public class CameraController : MonoBehaviour
     {
-        Transform player;
+        private Transform _player;
 
-        void Start()
+        private void Start()
         {
-            player = GameObject.FindWithTag("Player").transform;
+            _player = GameObject.FindWithTag("Player").transform;
         }
 
-        void Update()
+        private void Update()
         {
-            transform.position = player.position;
+            transform.position = _player.position;
         }
     }
 }

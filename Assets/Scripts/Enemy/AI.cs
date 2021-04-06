@@ -1,72 +1,70 @@
-using Game.Combat;
-using System.Collections;
-using System.Collections.Generic;
+using Combat;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Game.Enemy
+namespace Enemy
 {
     public class AI : MonoBehaviour
     {
-        NavMeshAgent agent;
-        Transform player;
-        Animator anim;
-        State currentState;
-        Health health;
+        private NavMeshAgent _agent;
+        private Transform _player;
+        private Animator _anim;
+        private State _currentState;
+        private Health _health;
 
-        void Start()
+        private void Start()
         {
-            agent = GetComponent<NavMeshAgent>();
-            anim = GetComponent<Animator>();
-            player = GameObject.FindWithTag("Player").transform;
-            health = GetComponent<Health>();
-            currentState = new Idle(gameObject, agent, anim, player);
+            _agent = GetComponent<NavMeshAgent>();
+            _anim = GetComponent<Animator>();
+            _player = GameObject.FindWithTag("Player").transform;
+            _health = GetComponent<Health>();
+            _currentState = new Idle(gameObject, _agent, _anim, _player);
         }
 
-        void Update()
+        private void Update()
         {
-            currentState = currentState.Process();
+            _currentState = _currentState.Process();
         }
 
         public void Die()
         {
-            currentState = new Dead(gameObject, agent, anim, player);
+            _currentState = new Dead(gameObject, _agent, _anim, _player);
             GetComponentInChildren<Hurtbox>().DisableHitbox();
             GetComponentInChildren<Hurtbox>().DisableHurtbox();
         }
 
-        void AnimationStart()
+        private void AnimationStart()
         {
 
         }
 
-        void AnimationDelayedStart()
+        private void AnimationDelayedStart()
         {
 
         }
 
-        void AnimationEnd()
+        private void AnimationEnd()
         {
             GetComponentInParent<TriggerAttacks>().StopShielded();
-            currentState.Exit();
+            _currentState.Exit();
         }
 
-        void AnimationAttackHitStart()
+        private void AnimationAttackHitStart()
         {
             GetComponentInChildren<Hurtbox>().EnableHitbox();
         }
 
-        void AnimationAttackHitEnd()
+        private void AnimationAttackHitEnd()
         {
             GetComponentInChildren<Hurtbox>().DisableHitbox();
         }
 
-        void AnimationIsHitStart()
+        private void AnimationIsHitStart()
         {
-            currentState = new Hit(gameObject, agent, anim, player);
+            _currentState = new Hit(gameObject, _agent, _anim, _player);
         }
 
-        void AnimationIsHitEnd()
+        private void AnimationIsHitEnd()
         {
             
         }

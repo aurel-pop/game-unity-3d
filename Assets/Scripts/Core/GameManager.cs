@@ -1,15 +1,12 @@
-using Game.Combat;
-using System.Collections;
-using System.Collections.Generic;
+using Combat;
 using UnityEngine;
 
-namespace Game.Core
+namespace Core
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance { get; private set; }
-        public bool IsGameOver { get; private set; }
-        Health playerHealth;
+        private static GameManager Instance { get; set; }
+        private Health _playerHealth;
 
         private void Awake()
         {
@@ -23,14 +20,13 @@ namespace Game.Core
             DontDestroyOnLoad(this.gameObject);
         }
 
-        void Start()
+        private void Start()
         {
-            playerHealth = GameObject.FindWithTag("Player").GetComponentInChildren<Health>();
+            _playerHealth = GameObject.FindWithTag("Player").GetComponentInChildren<Health>();
         }
 
-        public void GameOver()
+        public static void GameOver()
         {
-            IsGameOver = true;
         }
     }
 }

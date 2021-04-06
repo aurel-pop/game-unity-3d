@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-
-namespace Game.Combat
+namespace Combat
 {
     public static class Attack
     {

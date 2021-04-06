@@ -1,17 +1,16 @@
-using Game.Core;
-using Game.Enemy;
-using System.Collections;
-using System.Collections.Generic;
+using Core;
+using Enemy;
 using UnityEngine;
 
-namespace Game.Combat
+namespace Combat
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] int maxHealth;
-        [SerializeField] ProgressBarPro healthBar;
-        int _health;
+        [SerializeField] private int maxHealth;
+        [SerializeField] private ProgressBarPro healthBar;
+        private int _health;
         public bool isDead;
+        private static readonly int Die1 = Animator.StringToHash("die");
 
         public int Current
         {
@@ -28,21 +27,21 @@ namespace Game.Combat
             }
         }
 
-        void Start()
+        private void Start()
         {
             _health = maxHealth;
         }
 
-        void Die()
+        private void Die()
         {
             isDead = true;
-            GetComponentInChildren<Animator>().SetTrigger("die");
+            GetComponentInChildren<Animator>().SetTrigger(Die1);
 
-            if (tag == "Player")
+            if (CompareTag("Player"))
             {
-                GameManager.Instance.GameOver();
+                GameManager.GameOver();
             }
-            else if (tag == "AI")
+            else if (CompareTag("AI"))
             {
                 GetComponent<AI>().Die();
             }

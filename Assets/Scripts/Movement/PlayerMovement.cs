@@ -1,8 +1,7 @@
-﻿using Game.Control;
-using System;
+﻿using Control;
 using UnityEngine;
 
-namespace Game.Movement
+namespace Movement
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(InputHandler))]
@@ -13,21 +12,22 @@ namespace Game.Movement
         [Range(0.0f, 3.0f)] public float groundDistance;
         public Transform groundChecker;
         public LayerMask ground;
-        CharacterController characterController;
-        Animator animator;
-        Inputs Inputs;
-        Vector2 _inputMoveVector;
+        private CharacterController _characterController;
+        private Animator _animator;
+        private Inputs _inputs;
+        private Vector2 _inputMoveVector;
+        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
-        void Start()
+        private void Start()
         {
-            Inputs = InputHandler.Instance.Inputs;
-            characterController = GetComponent<CharacterController>();
-            animator = GetComponentInChildren<Animator>();
-            Inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
-            Inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            _inputs = InputHandler.Instance.Inputs;
+            _characterController = GetComponent<CharacterController>();
+            _animator = GetComponentInChildren<Animator>();
+            _inputs.Player.MouseMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
+            _inputs.Player.GamepadMove.performed += ctx => _inputMoveVector = ctx.ReadValue<Vector2>();
         }
 
-        void Update()
+        private void Update()
         {
             if (InputHandler.Instance.TakeMovement)
             {
@@ -37,17 +37,17 @@ namespace Game.Movement
             UpdateAnimator();
         }
 
-        void MoveCharacter()
+        private void MoveCharacter()
         {
             Vector3 velocity = (_inputMoveVector.y * transform.forward) + (_inputMoveVector.x * transform.right);
-            characterController.Move(velocity * (moveSpeed * Time.deltaTime));
+            _characterController.Move(velocity * (moveSpeed * Time.deltaTime));
         }
 
-        void UpdateAnimator()
+        private void UpdateAnimator()
         {
-            Vector3 velocity = characterController.velocity;
+            Vector3 velocity = _characterController.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-            animator.SetFloat("forwardSpeed", Mathf.Lerp(animator.GetFloat("forwardSpeed"), localVelocity.magnitude, animationSpeed * Time.deltaTime));
+            _animator.SetFloat(ForwardSpeed, Mathf.Lerp(_animator.GetFloat(ForwardSpeed), localVelocity.magnitude, animationSpeed * Time.deltaTime));
         }
     }
 }

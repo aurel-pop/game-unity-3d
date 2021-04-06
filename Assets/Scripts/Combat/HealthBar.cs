@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Combat
+namespace Combat
 {
     public class HealthBar : MonoBehaviour
     {
-        [SerializeField] Transform target;
-        [SerializeField] Vector3 offset;
+        [SerializeField] private Transform target;
+        [SerializeField] private Vector3 offset;
 
-        void Update()
+        private void Update()
         {
             transform.position = target.position + offset;
         }

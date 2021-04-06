@@ -1,26 +1,24 @@
-using Game.Combat;
-using Game.Control;
-using System.Collections;
-using System.Collections.Generic;
+using Combat;
+using Control;
 using UnityEngine;
 
-namespace Game.Core
+namespace Core
 {
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimationEvents : MonoBehaviour
     {
-        void AnimationStart()
+        private void AnimationStart()
         {
             InputHandler.Instance.TakeAttacks = false;
         }
 
-        void AnimationDelayedStart()
+        private void AnimationDelayedStart()
         {
             InputHandler.Instance.TakeMovement = false;
             InputHandler.Instance.TakeRotation = false;
         }
 
-        void AnimationEnd()
+        private void AnimationEnd()
         {
             if(!GetComponentInParent<Health>().isDead)
             {
@@ -33,27 +31,25 @@ namespace Game.Core
             GetComponentInParent<TriggerAttacks>().StopShielded();
         }
 
-        void AnimationAttackHitStart()
+        private void AnimationAttackHitStart()
         {
             GetComponentInChildren<Hurtbox>().EnableHitbox();
         }
 
-        void AnimationAttackHitEnd()
+        private void AnimationAttackHitEnd()
         {
             GetComponentInChildren<Hurtbox>().DisableHitbox();
         }
 
-        void AnimationIsHitStart()
+        private void AnimationIsHitStart()
         {
             InputHandler.Instance.TakeMovement = false;
         }
 
-        void AnimationIsHitEnd()
+        private void AnimationIsHitEnd()
         {
-            if (!GetComponentInParent<Health>().isDead)
-            {
-                InputHandler.Instance.TakeMovement = true;
-            }
+            if (GetComponentInParent<Health>().isDead) return;
+            InputHandler.Instance.TakeMovement = true;
         }
     }
 }

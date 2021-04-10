@@ -4,7 +4,7 @@ namespace Control
 {
     public class InputHandler : MonoBehaviour
     {
-        public enum InputMethods
+        public enum InputMethod
         {
             Mouse,
             Gamepad
@@ -15,7 +15,7 @@ namespace Control
         public bool TakeMovement { get; set; } = true;
         public bool TakeRotation { get; set; } = true;
         public Inputs Inputs { get; private set; }
-        public InputMethods Method { get; private set; } = InputMethods.Mouse;
+        public InputMethod Current { get; private set; } = InputMethod.Mouse;
 
         private void Awake()
         {
@@ -31,16 +31,16 @@ namespace Control
             Inputs = new Inputs();
 
             //Mouse
-            Inputs.Player.MouseMove.performed += ctx => Method = InputMethods.Mouse;
-            Inputs.Player.MouseVector.performed += ctx => Method = InputMethods.Mouse;
-            Inputs.Player.LMBStart.performed += ctx => Method = InputMethods.Mouse;
-            Inputs.Player.RMBStart.performed += ctx => Method = InputMethods.Mouse;
+            Inputs.Player.MouseMove.performed += ctx => Current = InputMethod.Mouse;
+            Inputs.Player.MouseVector.performed += ctx => Current = InputMethod.Mouse;
+            Inputs.Player.LMBStart.performed += ctx => Current = InputMethod.Mouse;
+            Inputs.Player.RMBStart.performed += ctx => Current = InputMethod.Mouse;
 
             //Gamepad
-            Inputs.Player.GamepadMove.performed += ctx => Method = InputMethods.Gamepad;
-            Inputs.Player.GamepadVector.performed += ctx => Method = InputMethods.Gamepad;
-            Inputs.Player.GamepadRTStart.performed += ctx => Method = InputMethods.Gamepad;
-            Inputs.Player.GamepadLTStart.performed += ctx => Method = InputMethods.Gamepad;
+            Inputs.Player.GamepadMove.performed += ctx => Current = InputMethod.Gamepad;
+            Inputs.Player.GamepadVector.performed += ctx => Current = InputMethod.Gamepad;
+            Inputs.Player.GamepadRTStart.performed += ctx => Current = InputMethod.Gamepad;
+            Inputs.Player.GamepadLTStart.performed += ctx => Current = InputMethod.Gamepad;
         }
 
         private void OnEnable()

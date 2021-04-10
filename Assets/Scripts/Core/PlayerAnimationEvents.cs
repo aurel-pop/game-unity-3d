@@ -8,10 +8,12 @@ namespace Core
     public class PlayerAnimationEvents : MonoBehaviour
     {
         private Health _health;
+        private Attacks _attacks;
 
         private void Start()
         {
             _health = GetComponentInParent<Health>();
+            _attacks = GetComponentInParent<Attacks>();
         }
 
         private void AnimationStart()
@@ -28,11 +30,22 @@ namespace Core
         private void AnimationEnd()
         {
             if (_health.IsDead) return;
+            ResetAttacks();
+            ResetInputs();
+            InputCombat.Instance.PerformQueuedAttack();
+        }
+        private void ResetAttacks() {
+
             _health.IsShielded = false;
+            _health.IsInvulnerable = false;
+            _attacks.IsPenetrating = false;
+            _attacks.IsStunning = false;
+        }
+        private static void ResetInputs() {
+
             InputHandler.Instance.TakeAttacks = true;
             InputHandler.Instance.TakeMovement = true;
             InputHandler.Instance.TakeRotation = true;
-            GetComponentInParent<InputAttacks>().PerformQueuedAttack();
         }
 
         private void AnimationAttackHitStart()

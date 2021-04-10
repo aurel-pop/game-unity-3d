@@ -6,18 +6,33 @@ namespace Combat
     {
         private static readonly int Hit = Animator.StringToHash("hit");
         [SerializeField] private SphereCollider hitbox;
+        private Health _health;
+        private Attacks _attacks;
 
         private void Start()
         {
             hitbox.enabled = false;
+            _health = GetComponentInParent<Health>();
+            _attacks = GetComponentInParent<Attacks>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            var health = GetComponentInParent<Health>();
-            if (health.IsShielded) return;
+            Attacks otherAttacks = other.GetComponentInParent<Attacks>();
+            if (_health.IsInvulnerable) return;
+            if (_health.IsShielded && !otherAttacks.IsPenetrating)
+            {
+                _attacks.Rage += _attacks.RageGain;
+                return;
+            }
+            ApplyDamage(otherAttacks);
+        }
+        private void ApplyDamage(Attacks otherAttacks)
+        {
             GetComponentInParent<Animator>().SetTrigger(Hit);
-            health.Current -= 100;
+            _health.Current -= otherAttacks.Damage;
+            otherAttacks.Rage += otherAttacks.RageGain;
+            _health.IsStunned = otherAttacks.IsStunning;
         }
 
         public void EnableHitbox()

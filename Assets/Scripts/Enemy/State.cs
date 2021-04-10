@@ -25,12 +25,14 @@ namespace Enemy
         protected Event phase;
 
         protected readonly GameObject npc;
+        protected readonly Health health;
+        protected readonly Attacks attacks;
         protected readonly Animator animator;
         protected readonly Transform player;
         protected readonly NavMeshAgent navMeshAgent;
         protected State nextState;
+        
         private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
-
         private const float VisDist = 15.0f;
         private const float VisAngle = 90.0f;
         private const float AttackDist = 3f;
@@ -42,6 +44,8 @@ namespace Enemy
             this.navMeshAgent = navMeshAgent;
             this.animator = animator;
             this.player = player;
+            this.health = npc.GetComponent<Health>();
+            this.attacks = npc.GetComponent<Attacks>();
             phase = Event.Enter;
         }
 
@@ -148,43 +152,42 @@ namespace Enemy
         protected override void Enter()
         {
             navMeshAgent.isStopped = true;
-            Combat.Attack.Directions attack;
+            Attacks.Type currentAttack = Attacks.Type.Light;
+            
             int rng = Random.Range(0, 100);
             if (rng < 25)
             {
-                attack = Combat.Attack.Directions.Combo;
+                currentAttack = Attacks.Type.Light;
             }
             else if (rng < 50)
             {
-                attack = Combat.Attack.Directions.Light;
+                currentAttack = Attacks.Type.Combo;
             }
             else if (rng < 75)
             {
-                attack = Combat.Attack.Directions.Super;
-            }
-            else
-            {
-                attack = Combat.Attack.Directions.Heavy;
+                currentAttack = Attacks.Type.Heavy;
             }
 
-            npc.GetComponent<TriggerAttacks>().TriggerAttack(attack);
+            attacks.PerformAttack(currentAttack);
 
             base.Enter();
         }
 
-        protected override void Update()
-        {
+        protected override void Update() {
+            RotateToPlayer();
+            base.Update();
+        }
+        private void RotateToPlayer() {
+
             Vector3 direction = player.position - npc.transform.position;
-            float angle = Vector3.Angle(direction, npc.transform.forward);
+            Vector3.Angle(direction, npc.transform.forward);
             direction.y = 0;
             npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * RotationSpeed);
-
-            base.Update();
         }
 
         public override void Exit()
         {
-            if (npc.GetComponent<Health>().IsDead)
+            if (health.IsDead)
                 nextState = new Dead(npc, navMeshAgent, animator, player);
             else if (player.GetComponentInChildren<Health>().IsDead)
                 nextState = new Won(npc, navMeshAgent, animator, player);

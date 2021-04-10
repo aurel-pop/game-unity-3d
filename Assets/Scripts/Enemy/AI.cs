@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 namespace Enemy
 {
+    [RequireComponent(typeof(Animator))]
     public class AI : MonoBehaviour
     {
         [SerializeField] private Text stateTextUI;
+        private Health _health;
+        private Attacks _attacks;
         private NavMeshAgent _agent;
         private Animator _anim;
         private State _currentState;
@@ -15,6 +18,8 @@ namespace Enemy
 
         private void Start()
         {
+            _health = GetComponent<Health>();
+            _attacks = GetComponent<Attacks>();
             _agent = GetComponent<NavMeshAgent>();
             _anim = GetComponent<Animator>();
             _player = GameObject.FindWithTag("Player").transform;
@@ -49,8 +54,17 @@ namespace Enemy
 
         private void AnimationEnd()
         {
-            GetComponentInChildren<Health>().IsShielded = false;
+            ResetAttacks();
             _currentState.Exit();
+        }
+        
+        private void ResetAttacks()
+        {
+            if (_health.IsDead) return;
+            _health.IsShielded = false;
+            _health.IsInvulnerable = false;
+            _attacks.IsPenetrating = false;
+            _attacks.IsStunning = false;
         }
 
         private void AnimationAttackHitStart()

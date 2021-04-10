@@ -10,27 +10,30 @@ namespace Combat
         private static readonly int Die1 = Animator.StringToHash("die");
         [SerializeField] private int maxHealth;
         [SerializeField] private ProgressBarPro healthBar;
-        private int _health;
+        private int _hp;
+        
         public bool IsDead { get; private set; }
         public bool IsShielded { get; set; }
+        public bool IsInvulnerable { get; set; }
+        public bool IsStunned { get; set; }
 
         public int Current
         {
-            get => _health;
+            get => _hp;
             set
             {
-                _health = Mathf.Clamp(value, 0, maxHealth);
-                healthBar.SetValue(_health, maxHealth);
+                _hp = Mathf.Clamp(value, 0, maxHealth);
+                healthBar.SetValue(_hp, maxHealth);
 
-                if (_health <= 0) Die();
+                if (_hp <= 0) Die();
             }
         }
 
         private void Start()
         {
-            _health = maxHealth;
+            Current = maxHealth;
         }
-
+        
         private void Die()
         {
             IsDead = true;

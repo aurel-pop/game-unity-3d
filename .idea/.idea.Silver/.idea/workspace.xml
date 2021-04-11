@@ -34,7 +34,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/HealthBar.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/CameraController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UnitTests/PlayerTest.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Tests/PlayerTest.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/TriggerAttacks.cs" />
@@ -55,9 +54,10 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/PlayerAnimationEvents.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Core/AnimationEvent.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/AI.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/AnimationEvents.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Actions.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/State.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/AnimationEvents.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerMovement.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1qnsUQCxnkWvYAMftKKul7U84M6" />
@@ -118,7 +118,8 @@
       <workItem from="1618139990772" duration="93000" />
       <workItem from="1618140108019" duration="27000" />
       <workItem from="1618140209722" duration="1190000" />
-      <workItem from="1618147432745" duration="11588000" />
+      <workItem from="1618147432745" duration="11725000" />
+      <workItem from="1618159687258" duration="1088000" />
     </task>
     <servers />
   </component>

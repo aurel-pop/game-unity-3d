@@ -41,11 +41,17 @@ namespace Core
             SpawnVFX(3);
         }
         
-        private void AnimationStartInvulnerable()
+        private void AnimationStartSuper()
         {
             if(CompareTag("Player")) InputHandler.Instance.TakeAttacks = false;
             _health.IsInvulnerable = true;
             SpawnVFX(4);
+        }
+        
+        private void AnimationStartEnrage()
+        {
+            if(CompareTag("Player")) InputHandler.Instance.TakeAttacks = false;
+            _health.IsInvulnerable = true;
         }
 
         private void AnimationDelayedStart()
@@ -57,8 +63,8 @@ namespace Core
 
         private void AnimationAttackHitStart()
         {
-            if (_actions.IsPenetrating) SpawnVFX(0);
             if (_actions.IsStunning) SpawnVFX(1);
+            else if (_actions.IsPenetrating) SpawnVFX(0);
             _hurtbox.EnableHitbox();
         }
 

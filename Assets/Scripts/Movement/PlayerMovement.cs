@@ -10,9 +10,6 @@ namespace Movement
         private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
         [Range(0.0f, 20.0f)] public float moveSpeed;
         [Range(0.0f, 20.0f)] public float animationSpeed;
-        [Range(0.0f, 3.0f)] public float groundDistance;
-        public Transform groundChecker;
-        public LayerMask ground;
         private Animator _animator;
         private CharacterController _characterController;
         private Vector2 _inputMoveVector;
@@ -30,7 +27,6 @@ namespace Movement
         private void Update()
         {
             if (InputHandler.Instance.TakeMovement) MoveCharacter();
-
             UpdateAnimator();
         }
 

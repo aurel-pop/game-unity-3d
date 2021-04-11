@@ -24,6 +24,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Combat/Hurtbox.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerJump.cs" />
@@ -37,20 +40,23 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/TriggerAttacks.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/AttackTypes.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/ActionTypes.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Hurtbox.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Action.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Actions.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputHandler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputAttacks.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputAttack.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Control/InputCombat.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PlayerRotate.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Core/PlayerAnimationEvents.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/CanvasUI.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Health.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Attack.cs" />
+      <option value="$PROJECT_DIR$/Assets/Packs/Imagy VFX/VFX_Resources/Scripts/Camera/IFX_CameraShakeController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Hurtbox.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Attacks.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/PlayerAnimationEvents.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/AnimationEvent.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/AI.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Core/AnimationEvents.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Combat/Actions.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/State.cs" />
     </changedPaths>
   </component>
@@ -109,6 +115,10 @@
       <workItem from="1617961502468" duration="2667000" />
       <workItem from="1618049205502" duration="1118000" />
       <workItem from="1618050660957" duration="11333000" />
+      <workItem from="1618139990772" duration="93000" />
+      <workItem from="1618140108019" duration="27000" />
+      <workItem from="1618140209722" duration="1190000" />
+      <workItem from="1618147432745" duration="11588000" />
     </task>
     <servers />
   </component>

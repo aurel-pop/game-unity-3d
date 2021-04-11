@@ -7,32 +7,32 @@ namespace Combat
         private static readonly int Hit = Animator.StringToHash("hit");
         [SerializeField] private SphereCollider hitbox;
         private Health _health;
-        private Attacks _attacks;
+        private Actions _actions;
 
         private void Start()
         {
             hitbox.enabled = false;
             _health = GetComponentInParent<Health>();
-            _attacks = GetComponentInParent<Attacks>();
+            _actions = GetComponentInParent<Actions>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            Attacks otherAttacks = other.GetComponentInParent<Attacks>();
+            Actions enemyActions = other.GetComponentInParent<Actions>();
             if (_health.IsInvulnerable) return;
-            if (_health.IsShielded && !otherAttacks.IsPenetrating)
+            if (_health.IsShielded && !enemyActions.IsPenetrating)
             {
-                _attacks.Rage += _attacks.RageGain;
+                _actions.Rage += _actions.RageGain;
                 return;
             }
-            ApplyDamage(otherAttacks);
+            if (enemyActions.IsStunning) _actions.PerformAction(Actions.Type.Stunned);
+            ApplyDamage(enemyActions);
         }
-        private void ApplyDamage(Attacks otherAttacks)
+        private void ApplyDamage(Actions enemyActions)
         {
             GetComponentInParent<Animator>().SetTrigger(Hit);
-            _health.Current -= otherAttacks.Damage;
-            otherAttacks.Rage += otherAttacks.RageGain;
-            _health.IsStunned = otherAttacks.IsStunning;
+            _health.Current -= enemyActions.Damage;
+            enemyActions.Rage += enemyActions.RageGain;
         }
 
         public void EnableHitbox()

@@ -12,6 +12,7 @@ namespace Enemy
             Chase,
             Attack,
             Hit,
+            Stunned,
             Dead,
             Won
         }
@@ -25,8 +26,6 @@ namespace Enemy
         protected Event phase;
 
         protected readonly GameObject npc;
-        protected readonly Health health;
-        protected readonly Attacks attacks;
         protected readonly Animator animator;
         protected readonly Transform player;
         protected readonly NavMeshAgent navMeshAgent;
@@ -44,8 +43,6 @@ namespace Enemy
             this.navMeshAgent = navMeshAgent;
             this.animator = animator;
             this.player = player;
-            this.health = npc.GetComponent<Health>();
-            this.attacks = npc.GetComponent<Attacks>();
             phase = Event.Enter;
         }
 
@@ -152,23 +149,27 @@ namespace Enemy
         protected override void Enter()
         {
             navMeshAgent.isStopped = true;
-            Attacks.Type currentAttack = Attacks.Type.Light;
+            Actions.Type currentAttack = Actions.Type.Light;
             
             int rng = Random.Range(0, 100);
             if (rng < 25)
             {
-                currentAttack = Attacks.Type.Light;
+                currentAttack = Actions.Type.Light;
             }
             else if (rng < 50)
             {
-                currentAttack = Attacks.Type.Combo;
+                currentAttack = Actions.Type.Combo;
             }
             else if (rng < 75)
             {
-                currentAttack = Attacks.Type.Heavy;
+                currentAttack = Actions.Type.Heavy;
+            }
+            else
+            {
+                currentAttack = Actions.Type.Shield;
             }
 
-            attacks.PerformAttack(currentAttack);
+            npc.GetComponent<Actions>().PerformAction(currentAttack);
 
             base.Enter();
         }
@@ -187,9 +188,7 @@ namespace Enemy
 
         public override void Exit()
         {
-            if (health.IsDead)
-                nextState = new Dead(npc, navMeshAgent, animator, player);
-            else if (player.GetComponentInChildren<Health>().IsDead)
+            if (player.GetComponentInChildren<Health>().IsDead)
                 nextState = new Won(npc, navMeshAgent, animator, player);
             else if (CanAttackPlayer())
                 nextState = new Attack(npc, navMeshAgent, animator, player);
@@ -211,9 +210,27 @@ namespace Enemy
 
         public override void Exit()
         {
-            if (npc.GetComponent<Health>().IsDead)
-                nextState = new Dead(npc, navMeshAgent, animator, player);
-            else if (CanAttackPlayer())
+            if (CanAttackPlayer())
+                nextState = new Attack(npc, navMeshAgent, animator, player);
+            else if (CanSeePlayer())
+                nextState = new Chase(npc, navMeshAgent, animator, player);
+            else
+                nextState = new Idle(npc, navMeshAgent, animator, player);
+
+            base.Exit();
+        }
+    }
+    
+    public class Stunned : State
+    {
+        public Stunned(GameObject npc, NavMeshAgent navMeshAgent, Animator animator, Transform player) : base(npc, navMeshAgent, animator, player)
+        {
+            name = States.Stunned;
+        }
+
+        public override void Exit()
+        {
+            if (CanAttackPlayer())
                 nextState = new Attack(npc, navMeshAgent, animator, player);
             else if (CanSeePlayer())
                 nextState = new Chase(npc, navMeshAgent, animator, player);

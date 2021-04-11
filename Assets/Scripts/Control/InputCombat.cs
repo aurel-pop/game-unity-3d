@@ -19,8 +19,8 @@ namespace Control
         private Vector2 _inputVectorStarted;
         private bool _isShielding;
         private float _minDelta;
-        private Attacks.Type _queuedAttack = Attacks.Type.None;
-        private Attacks _attacks;
+        private Actions.Type _queuedAttack = Actions.Type.None;
+        private Actions _actions;
 
         private void Awake()
         {
@@ -36,7 +36,7 @@ namespace Control
         private void Start()
         {
             _inputs = InputHandler.Instance.Inputs;
-            _attacks = GetComponentInChildren<Attacks>();
+            _actions = GetComponentInChildren<Actions>();
 
             //Mouse
             _inputs.Player.MouseVector.performed += ctx => _inputVector = ctx.ReadValue<Vector2>();
@@ -101,34 +101,34 @@ namespace Control
         private void AskForAttack()
         {
             if (InputHandler.Instance.TakeAttacks)
-                _attacks.PerformAttack(CalculateDirection());
+                _actions.PerformAction(CalculateDirection());
             else
                 _queuedAttack = CalculateDirection();
         }
 
-        private Attacks.Type CalculateDirection()
+        private Actions.Type CalculateDirection()
         {
-            Attacks.Type currentAttack = Attacks.Type.Light;
+            Actions.Type currentAttack = Actions.Type.Light;
 
             if (_isShielding)
-                currentAttack = Attacks.Type.Shield;
+                currentAttack = Actions.Type.Shield;
             else if (_inputVectorDelta.x > _minDelta && Mathf.Abs(_inputVectorDelta.x) > Mathf.Abs(_inputVectorDelta.y))
-                currentAttack = Attacks.Type.Combo;
+                currentAttack = Actions.Type.Combo;
             else if (_inputVectorDelta.x < -_minDelta && Mathf.Abs(_inputVectorDelta.x) > Mathf.Abs(_inputVectorDelta.y))
-                currentAttack = Attacks.Type.Light;
+                currentAttack = Actions.Type.Light;
             else if (_inputVectorDelta.y > _minDelta)
-                currentAttack = Attacks.Type.Super;
+                currentAttack = Actions.Type.Super;
             else if (_inputVectorDelta.y < -_minDelta)
-                currentAttack = Attacks.Type.Heavy;
+                currentAttack = Actions.Type.Heavy;
 
             return currentAttack;
         }
 
         public void PerformQueuedAttack()
         {
-            if (_queuedAttack == Attacks.Type.None) return;
-            GetComponentInChildren<Attacks>().PerformAttack(_queuedAttack);
-            _queuedAttack = Attacks.Type.None;
+            if (_queuedAttack == Actions.Type.None) return;
+            GetComponentInChildren<Actions>().PerformAction(_queuedAttack);
+            _queuedAttack = Actions.Type.None;
         }
     }
 }

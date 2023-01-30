@@ -27,6 +27,7 @@ namespace Combat
         private static readonly int Shieldrun = Animator.StringToHash("shieldrun");
         private static readonly int Stun = Animator.StringToHash("stun");
         private Animator _animator;
+        private AudioSource _audio;
         private Health _health;
         [SerializeField] private int maxRage;
         [SerializeField] private ProgressBarPro rageBar;
@@ -36,6 +37,7 @@ namespace Combat
         public bool IsPenetrating { get; set; }
         public bool IsStunning { get; set; }
         public bool IsEnraged { get; set; }
+        [SerializeField] private AudioClip[] sfx;
 
         public int Rage
         {
@@ -55,6 +57,7 @@ namespace Combat
         {
             _health = GetComponentInChildren<Health>();
             _animator = GetComponentInChildren<Animator>();
+            _audio = GetComponentInParent<AudioSource>();
             Rage = 0;
         }
 
@@ -66,16 +69,19 @@ namespace Combat
                     break;
                 case Type.Light:
                     _animator.SetTrigger(Light);
+                    _audio.PlayOneShot(sfx[0]);
                     RageGain = 10;
                     Damage = 10;
                     break;
                 case Type.Combo:
                     _animator.SetTrigger(Combo);
+                    _audio.PlayOneShot(sfx[1]);
                     RageGain = 20;
                     Damage = 20;
                     break;
                 case Type.Heavy:
                     _animator.SetTrigger(Heavy);
+                    _audio.PlayOneShot(sfx[2]);
                     IsPenetrating = true;
                     RageGain = 50;
                     Damage = 50;
@@ -83,6 +89,7 @@ namespace Combat
                 case Type.Super:
                     if (!HasAmountOfRage(100)) return;
                     _animator.SetTrigger(Super);
+                    _audio.PlayOneShot(sfx[3]);
                     IsPenetrating = true;
                     Damage = 100;
                     break;
